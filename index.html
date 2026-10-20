@@ -18,7 +18,7 @@
     <div class="nav-container">
       <div class="brand-group">
         <div class="logo-wrapper" id="brandLogoContainer">
-          <img id="navSchoolLogo" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Logo SDN Cipinang Melayu 03 Pagi" class="school-logo">
+          <img id="navSchoolLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Logo SDN Cipinang Melayu 03 Pagi" class="school-logo" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
         </div>
         <div class="brand-text">
           <div class="brand-title">
@@ -500,23 +500,42 @@
             <!-- Print Preview Container (Standar A4 Kedinasan) -->
             <div class="printable-wrapper">
               <div id="printableDocument" class="official-report-sheet">
-                <!-- Kop Surat Resmi SDN Cipinang Melayu 03 Pagi -->
-                <div class="kop-surat">
-                  <div class="kop-logo-left">
-                    <img id="kopSchoolLogo" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Logo Sekolah" class="kop-img">
+                <!-- KOP SURAT CONTAINER (DUAL MODE: GAMBAR BANNER / TEKS KEDINASAN RAPI) -->
+                <div id="kopSuratWrapper">
+                  <!-- Mode A: Banner Gambar Kop Surat (Jika Diunggah Sekolah) -->
+                  <div id="kopImageContainer" class="kop-image-banner" style="display:none;">
+                    <img id="kopUploadedBanner" src="" alt="Kop Surat Resmi SDN Cipinang Melayu 03 Pagi" class="kop-banner-img">
                   </div>
-                  <div class="kop-text">
-                    <h4 class="kop-provinsi">PEMERINTAH PROVINSI DAERAH KHUSUS IBUKOTA JAKARTA</h4>
-                    <h4 class="kop-sudin">DINAS PENDIDIKAN</h4>
-                    <h4 class="kop-wilayah">SUKU DINAS PENDIDIKAN WILAYAH I KOTA ADMINISTRASI JAKARTA TIMUR</h4>
-                    <h2 class="kop-sekolah" id="kopSchoolName">SEKOLAH DASAR NEGERI CIPINANG MELAYU 03 PAGI</h2>
-                    <p class="kop-npsn">NPSN: <span id="kopNpsn">20108862</span> | Akreditasi: A</p>
-                    <p class="kop-alamat" id="kopSchoolAddress">
-                      Jl. Manunggal II RT.003/RW.02, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, DKI Jakarta 13620
-                    </p>
+
+                  <!-- Mode B: Format Teks Resmi Kedinasan Simetris Rapi -->
+                  <div id="kopTextContainer">
+                    <div class="kop-surat">
+                      <div class="kop-logo-side kop-logo-left">
+                        <img id="kopSchoolLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Logo Sekolah" class="kop-img" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
+                      </div>
+                      <div class="kop-text">
+                        <h4 class="kop-provinsi">PEMERINTAH PROVINSI DAERAH KHUSUS IBUKOTA JAKARTA</h4>
+                        <h4 class="kop-sudin">DINAS PENDIDIKAN</h4>
+                        <h4 class="kop-wilayah">SUKU DINAS PENDIDIKAN WILAYAH I KOTA ADMINISTRASI JAKARTA TIMUR</h4>
+                        <h2 class="kop-sekolah" id="kopSchoolName">SEKOLAH DASAR NEGERI CIPINANG MELAYU 03 PAGI</h2>
+                        <p class="kop-npsn">NPSN: <span id="kopNpsn">20104331</span> | Akreditasi: A</p>
+                        <p class="kop-alamat" id="kopSchoolAddress">
+                          Jl. Kartika Eka Paksi KPAD Jatiwaringin RT.010/006 Kel. Cipinang Melayu Kec. Makasar Jakarta Timur
+                        </p>
+                      </div>
+                      <div class="kop-logo-side kop-logo-right">
+                        <svg class="kop-img" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="50" cy="50" r="46" fill="#0284c7" />
+                          <path d="M50 18 L76 72 L24 72 Z" fill="#facc15" />
+                          <circle cx="50" cy="48" r="14" fill="#ffffff" />
+                          <path d="M42 48 L48 54 L58 42" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                          <text x="50" y="86" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="#ffffff">PENDIDIKAN</text>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="kop-line-double"></div>
                   </div>
                 </div>
-                <div class="kop-line-double"></div>
 
                 <!-- Report Title & Metadata -->
                 <div class="report-meta-center">
@@ -626,29 +645,65 @@
                 </div>
               </div>
 
-              <!-- Kartu Logo Sekolah & Google Apps Script Link -->
+              <!-- Kartu Logo Sekolah & Kop Surat Laporan -->
               <div class="panel-box">
                 <div class="panel-header">
-                  <h3>🖼️ Logo Sekolah & Google Apps Script</h3>
+                  <h3>🖼️ Logo Sekolah & Kop Surat Laporan</h3>
                 </div>
                 <div class="panel-body">
-                  <!-- Logo Preview & Upload -->
+                  <!-- 1. Logo Sekolah -->
                   <div class="form-group">
-                    <label>Logo Sekolah:</label>
+                    <label>Logo Sekolah (Navbar & Profil):</label>
                     <div class="logo-setting-preview">
-                      <img id="settingLogoPreview" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Preview Logo" class="preview-logo-img">
+                      <img id="settingLogoPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Preview Logo" class="preview-logo-img" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
                       <div class="logo-upload-box">
                         <input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
                         <button type="button" class="btn btn-secondary-pill" onclick="document.getElementById('settingLogoFile').click()">
                           📁 Pilih File Logo Baru
                         </button>
-                        <small class="help-text">Format PNG atau JPG. Disimpan otomatis ke Google Drive subfolder School_Assets.</small>
+                        <button type="button" class="btn btn-sm btn-link" onclick="resetDefaultLogo()">
+                          Kembalikan Logo Standar
+                        </button>
+                        <small class="help-text">Format PNG/JPG transparan. Otomatis dikompres & disimpan aman.</small>
                       </div>
                     </div>
                   </div>
 
+                  <!-- 2. Pengaturan Kop Surat Laporan PDF -->
+                  <div class="form-group" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                    <label>Pilihan Format Kop Surat Laporan:</label>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                      <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal; cursor:pointer;">
+                        <input type="radio" name="kopModeRadio" value="text" id="radioKopText" onchange="handleKopModeChange('text')" checked style="margin-top:4px;">
+                        <span><strong>Mode Teks Kedinasan Otomatis:</strong> Format teks resmi simetris dan rapi standar Dinas Pendidikan dengan logo di kiri & kanan.</span>
+                      </label>
+                      <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal; cursor:pointer;">
+                        <input type="radio" name="kopModeRadio" value="image" id="radioKopImage" onchange="handleKopModeChange('image')" style="margin-top:4px;">
+                        <span><strong>Mode Gambar Kop Surat Sekolah:</strong> Upload file gambar banner Kop Surat resmi sekolah (PNG/JPG).</span>
+                      </label>
+                    </div>
+
+                    <!-- Upload Gambar Kop Surat -->
+                    <div id="sectionUploadKopImage" style="background:#f8fafc; border:1px dashed var(--border-color); border-radius:var(--radius-sm); padding:14px; display:none;">
+                      <div style="margin-bottom:10px;">
+                        <img id="settingKopPreview" src="" alt="Pratinjau Kop Surat" style="max-width:100%; max-height:90px; object-fit:contain; border:1px solid #cbd5e1; background:#ffffff; display:none; margin-bottom:8px;">
+                        <span id="kopEmptyNotice" style="font-size:0.85rem; color:var(--muted-text); font-style:italic; display:block;">Belum ada gambar kop surat yang diunggah.</span>
+                      </div>
+                      <input type="file" id="settingKopFile" accept="image/*" onchange="handleKopImageUpload(event)" style="display:none;">
+                      <div style="display:flex; gap:8px;">
+                        <button type="button" class="btn btn-sm btn-secondary-pill" onclick="document.getElementById('settingKopFile').click()">
+                          📁 Upload Gambar Kop Surat (Banner)
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveKopImage" onclick="removeKopImage()" style="display:none;">
+                          Hapus Gambar
+                        </button>
+                      </div>
+                      <small class="help-text">Rekomendasi rasio banner memanjang (misal: lebar 1000-1200px, tinggi 150-250px).</small>
+                    </div>
+                  </div>
+
                   <!-- Google Apps Script URL Integration -->
-                  <div class="form-group">
+                  <div class="form-group" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
                     <label>URL Web App Google Apps Script:</label>
                     <input type="url" id="settingScriptUrl" class="custom-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
                     <small class="help-text">
