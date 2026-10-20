@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digipus - Perpustakaan Digital SDN Cipinang Melayu 03 Pagi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js for beautiful analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="theme-light">
+
+  <!-- TOP ANNOUNCEMENT BAR / CONNECTION STATUS -->
+  <header class="top-nav-bar">
+    <div class="nav-container">
+      <div class="brand-group">
+        <div class="logo-wrapper" id="brandLogoContainer">
+          <img id="navSchoolLogo" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Logo SDN Cipinang Melayu 03 Pagi" class="school-logo">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">
+            <span class="brand-highlight">Digipus</span>
+            <span class="badge-school">SDN Cipinang Melayu 03 Pagi</span>
+          </div>
+          <p class="brand-subtitle" id="navSubtitle">Perpustakaan Digital Ramah & Edukatif</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Backend Status Badge -->
+        <div id="connectionStatusBadge" class="status-pill status-demo" title="Status koneksi ke Google Apps Script">
+          <span class="status-dot"></span>
+          <span id="connectionStatusText">Mode Demo (Lokal)</span>
+        </div>
+
+        <!-- Mode Navigasi Switcher -->
+        <button id="btnGuestBookNav" class="btn btn-secondary-pill" onclick="openGuestBookModal()">
+          <span class="btn-icon">📝</span> Isi Buku Tamu
+        </button>
+
+        <button id="btnNavAuth" class="btn btn-primary-pill" onclick="toggleAuthAction()">
+          <span class="btn-icon">🔐</span> <span id="authBtnText">Login Admin</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="app-main">
+
+    <!-- ========================================================
+         VIEW 1: PORTAL PUBLIK / KATALOG SISWA & GURU
+         ======================================================== -->
+    <section id="viewPublic" class="view-section active">
+      <!-- Hero Banner Ceria & Ramah Anak -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <span class="hero-tag">🌟 Jendela Ilmu & Inspirasi Siswa</span>
+          <h1 class="hero-title">Membaca Cerdas, Meraih Prestasi di <span class="highlight-text">Digipus</span></h1>
+          <p class="hero-desc">
+            Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi! Temukan beragam buku cerita fiksi, ensiklopedia sains, komik edukasi, dan buku pelajaran tematik yang siap menemani belajarmu.
+          </p>
+
+          <div class="hero-stats-row">
+            <div class="mini-stat-card">
+              <span class="stat-num" id="pubTotalBooks">0</span>
+              <span class="stat-lbl">Koleksi Buku</span>
+            </div>
+            <div class="mini-stat-card">
+              <span class="stat-num" id="pubDigitalBooks">0</span>
+              <span class="stat-lbl">Buku Digital (E-Book)</span>
+            </div>
+            <div class="mini-stat-card">
+              <span class="stat-num" id="pubPhysicalBooks">0</span>
+              <span class="stat-lbl">Buku Fisik</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-illustration">
+          <div class="book-card-floating float-1">
+            <span class="float-icon">📖</span>
+            <div>
+              <strong>Buku Dongeng</strong>
+              <small>Cerita Rakyat</small>
+            </div>
+          </div>
+          <div class="book-card-floating float-2">
+            <span class="float-icon">🚀</span>
+            <div>
+              <strong>Sains & Antariksa</strong>
+              <small>E-Book Digital</small>
+            </div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80" alt="Membaca Buku" class="hero-img">
+        </div>
+      </div>
+
+      <!-- Quick Search & Category Filter Toolbar -->
+      <div class="catalog-toolbar">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="publicSearchInput" placeholder="Cari judul buku, nama pengarang, atau topik pelajaran..." oninput="handlePublicSearch()">
+          <button class="clear-search-btn" id="clearSearchBtn" onclick="clearPublicSearch()">✕</button>
+        </div>
+
+        <div class="filter-group-wrapper">
+          <!-- Filter Kategori -->
+          <div class="pill-filters" id="publicCategoryPills">
+            <button class="pill-btn active" data-cat="all" onclick="filterPublicCategory('all')">Semua Kategori</button>
+            <button class="pill-btn" data-cat="Fiksi" onclick="filterPublicCategory('Fiksi')">🦄 Fiksi & Cerita</button>
+            <button class="pill-btn" data-cat="Non-Fiksi" onclick="filterPublicCategory('Non-Fiksi')">🔬 Non-Fiksi & Sains</button>
+            <button class="pill-btn" data-cat="Pelajaran" onclick="filterPublicCategory('Pelajaran')">📚 Tematik & Pelajaran</button>
+            <button class="pill-btn" data-cat="Referensi" onclick="filterPublicCategory('Referensi')">🏛️ Kamus & Referensi</button>
+          </div>
+
+          <!-- Filter Format: Fisik / Digital -->
+          <div class="type-filter-group">
+            <select id="publicTypeFilter" onchange="handlePublicTypeFilter()" class="custom-select">
+              <option value="all">Semua Jenis (Fisik & Digital)</option>
+              <option value="Digital">⚡ Hanya Buku Digital (E-Book)</option>
+              <option value="Fisik">📦 Hanya Buku Fisik (Perpustakaan)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book Catalog Grid -->
+      <div class="catalog-grid-header">
+        <h2 class="section-title">Katalog Koleksi Buku (<span id="publicBookCount">0</span> judul)</h2>
+      </div>
+
+      <div class="book-grid" id="publicBookGrid">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW 2: DASHBOARD ADMIN & PENGELOLA PERPUSTAKAAN
+         ======================================================== -->
+    <section id="viewAdmin" class="view-section">
+      <div class="admin-layout">
+        <!-- Sidebar Menu Admin -->
+        <aside class="admin-sidebar">
+          <div class="sidebar-user-card">
+            <div class="avatar-circle">👩‍🏫</div>
+            <div class="user-meta">
+              <h4 id="sidebarAdminName">Administrator</h4>
+              <span class="role-badge">Pengelola Digipus</span>
+            </div>
+          </div>
+
+          <nav class="sidebar-nav">
+            <button class="sidebar-nav-item active" onclick="switchAdminTab('tabDashboard')">
+              <span class="nav-ico">📊</span> Dashboard & Statistik
+            </button>
+            <button class="sidebar-nav-item" onclick="switchAdminTab('tabBooks')">
+              <span class="nav-ico">📚</span> Data Buku (Fisik/Digital)
+            </button>
+            <button class="sidebar-nav-item" onclick="switchAdminTab('tabLoans')">
+              <span class="nav-ico">🔄</span> Peminjaman & Kembali
+            </button>
+            <button class="sidebar-nav-item" onclick="switchAdminTab('tabVisits')">
+              <span class="nav-ico">📝</span> Buku Tamu Kunjungan
+            </button>
+            <button class="sidebar-nav-item" onclick="switchAdminTab('tabReports')">
+              <span class="nav-ico">📄</span> Laporan & Rekap PDF
+            </button>
+            <button class="sidebar-nav-item" onclick="switchAdminTab('tabSettings')">
+              <span class="nav-ico">⚙️</span> Biodata & Pengaturan
+            </button>
+          </nav>
+
+          <div class="sidebar-footer">
+            <button class="btn btn-outline-danger w-100" onclick="logoutAdmin()">
+              🚪 Keluar Dashboard
+            </button>
+          </div>
+        </aside>
+
+        <!-- Admin Content Area -->
+        <div class="admin-content-area">
+
+          <!-- TAB 1: DASHBOARD & STATISTIK -->
+          <div id="tabDashboard" class="admin-tab-pane active">
+            <div class="dashboard-top-bar">
+              <div>
+                <h2 class="pane-title">Statistik Perpustakaan</h2>
+                <p class="pane-sub">Ringkasan aktivitas koleksi, sirkulasi peminjaman, dan kunjungan di SDN Cipinang Melayu 03 Pagi</p>
+              </div>
+              <button class="btn btn-secondary-pill" onclick="refreshAllData()">
+                🔄 Perbarui Data
+              </button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+              <div class="kpi-card card-blue">
+                <div class="kpi-icon">📚</div>
+                <div class="kpi-info">
+                  <span class="kpi-label">Total Judul Buku</span>
+                  <h3 class="kpi-value" id="kpiTotalTitles">0</h3>
+                  <small class="kpi-sub" id="kpiTotalExemplars">0 total eksemplar</small>
+                </div>
+              </div>
+
+              <div class="kpi-card card-purple">
+                <div class="kpi-icon">⚡</div>
+                <div class="kpi-info">
+                  <span class="kpi-label">Koleksi Digital (E-Book)</span>
+                  <h3 class="kpi-value" id="kpiDigitalBooks">0</h3>
+                  <small class="kpi-sub">Bisa dibaca langsung online</small>
+                </div>
+              </div>
+
+              <div class="kpi-card card-amber">
+                <div class="kpi-icon">🔄</div>
+                <div class="kpi-info">
+                  <span class="kpi-label">Peminjaman Aktif</span>
+                  <h3 class="kpi-value" id="kpiActiveLoans">0</h3>
+                  <small class="kpi-sub" id="kpiOverdueCount">0 melewati tenggat</small>
+                </div>
+              </div>
+
+              <div class="kpi-card card-emerald">
+                <div class="kpi-icon">👥</div>
+                <div class="kpi-info">
+                  <span class="kpi-label">Total Kunjungan</span>
+                  <h3 class="kpi-value" id="kpiTotalVisits">0</h3>
+                  <small class="kpi-sub">Siswa & Guru di Buku Tamu</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-row">
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>📊 Distribusi Buku Berdasarkan Kategori</h3>
+                </div>
+                <div class="chart-body">
+                  <canvas id="categoryChart"></canvas>
+                </div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>⭐ Buku Paling Diminati / Sering Dipinjam</h3>
+                </div>
+                <div class="chart-body">
+                  <canvas id="topBooksChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Loans Quick Peek -->
+            <div class="panel-box">
+              <div class="panel-header">
+                <h3>📌 Peminjaman Terkini Memerlukan Perhatian</h3>
+                <button class="btn btn-sm btn-link" onclick="switchAdminTab('tabLoans')">Lihat Semua →</button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="dashboardQuickLoansTable">
+                  <thead>
+                    <tr>
+                      <th>ID Pinjam</th>
+                      <th>Judul Buku</th>
+                      <th>Nama Peminjam</th>
+                      <th>Kelas</th>
+                      <th>Tenggat</th>
+                      <th>Status</th>
+                      <th>Aksi Cepat</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Injected dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: DATA BUKU (FISIK & DIGITAL) -->
+          <div id="tabBooks" class="admin-tab-pane">
+            <div class="pane-header-action">
+              <div>
+                <h2 class="pane-title">Manajemen Koleksi Buku</h2>
+                <p class="pane-sub">Kelola buku cetak fisik serta buku digital (E-Book PDF)</p>
+              </div>
+              <div class="header-button-group">
+                <button class="btn btn-primary" onclick="openAddBookModal()">
+                  <span class="btn-icon">➕</span> Tambah Buku Baru
+                </button>
+              </div>
+            </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="filter-bar">
+              <div class="search-input-group">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="adminBookSearch" placeholder="Cari buku berdasarkan judul, pengarang, ISBN..." oninput="handleAdminBookFilter()">
+              </div>
+              <select id="adminBookCatFilter" onchange="handleAdminBookFilter()" class="custom-select">
+                <option value="all">Semua Kategori</option>
+                <option value="Fiksi">Fiksi & Cerita</option>
+                <option value="Non-Fiksi">Non-Fiksi & Sains</option>
+                <option value="Pelajaran">Pelajaran & Tematik</option>
+                <option value="Referensi">Kamus & Referensi</option>
+                <option value="Agama">Agama & Budi Pekerti</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+              <select id="adminBookTypeFilter" onchange="handleAdminBookFilter()" class="custom-select">
+                <option value="all">Semua Jenis</option>
+                <option value="Fisik">📦 Fisik</option>
+                <option value="Digital">⚡ Digital</option>
+              </select>
+            </div>
+
+            <!-- Books Table -->
+            <div class="panel-box">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Cover</th>
+                      <th>Kode / ID</th>
+                      <th>Judul Buku</th>
+                      <th>Kategori & Jenis</th>
+                      <th>Pengarang & Penerbit</th>
+                      <th>Tahun</th>
+                      <th>Stok</th>
+                      <th>Rak / File</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminBooksTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: PEMINJAMAN & PENGEMBALIAN -->
+          <div id="tabLoans" class="admin-tab-pane">
+            <div class="pane-header-action">
+              <div>
+                <h2 class="pane-title">Sirkulasi Peminjaman & Pengembalian</h2>
+                <p class="pane-sub">Pencatatan sirkulasi peminjaman buku untuk siswa dan dewan guru</p>
+              </div>
+              <button class="btn btn-primary" onclick="openAddLoanModal()">
+                <span class="btn-icon">➕</span> Catat Peminjaman Baru
+              </button>
+            </div>
+
+            <div class="filter-bar">
+              <div class="search-input-group">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="loanSearchInput" placeholder="Cari peminjam, kelas, atau judul buku..." oninput="handleLoanFilter()">
+              </div>
+              <select id="loanStatusFilter" onchange="handleLoanFilter()" class="custom-select">
+                <option value="all">Semua Status</option>
+                <option value="Dipinjam">Aktif Dipinjam</option>
+                <option value="Dikembalikan">Sudah Dikembalikan</option>
+                <option value="Terlambat">Terlambat</option>
+              </select>
+            </div>
+
+            <div class="panel-box">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID Pinjam</th>
+                      <th>Judul Buku</th>
+                      <th>Peminjam</th>
+                      <th>Status / Peran</th>
+                      <th>Tgl Pinjam</th>
+                      <th>Tenggat Waktu</th>
+                      <th>Tgl Kembali</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminLoansTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: BUKU TAMU KUNJUNGAN -->
+          <div id="tabVisits" class="admin-tab-pane">
+            <div class="pane-header-action">
+              <div>
+                <h2 class="pane-title">Rekap Kunjungan Perpustakaan</h2>
+                <p class="pane-sub">Data kehadiran pengunjung perpustakaan SDN Cipinang Melayu 03 Pagi</p>
+              </div>
+              <button class="btn btn-secondary-pill" onclick="openGuestBookModal()">
+                <span class="btn-icon">✍️</span> Tambah Kunjungan Manual
+              </button>
+            </div>
+
+            <div class="filter-bar">
+              <div class="search-input-group">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="visitSearchInput" placeholder="Cari nama pengunjung atau kelas..." oninput="handleVisitFilter()">
+              </div>
+              <input type="date" id="visitDateFilter" onchange="handleVisitFilter()" class="custom-input">
+            </div>
+
+            <div class="panel-box">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Tanggal & Jam</th>
+                      <th>Nama Pengunjung</th>
+                      <th>Peran</th>
+                      <th>Kelas / Satuan</th>
+                      <th>Tujuan Kunjungan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminVisitsTableBody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: LAPORAN & REKAP PDF -->
+          <div id="tabReports" class="admin-tab-pane">
+            <div class="pane-header-action">
+              <div>
+                <h2 class="pane-title">Cetak Laporan & Rekapitulasi Rapi</h2>
+                <p class="pane-sub">Cetak dan unduh laporan resmi perpustakaan berformat standar kedinasan dengan Kop Surat SDN Cipinang Melayu 03 Pagi</p>
+              </div>
+              <div class="header-button-group">
+                <button class="btn btn-primary" onclick="triggerReportPrint()">
+                  <span class="btn-icon">🖨️</span> Cetak / Simpan PDF
+                </button>
+              </div>
+            </div>
+
+            <!-- Report Configuration Toolbar -->
+            <div class="report-controls-card">
+              <div class="form-row">
+                <div class="form-col">
+                  <label>Pilih Jenis Dokumen Laporan:</label>
+                  <select id="reportTypeSelect" onchange="generateReportPreview()" class="custom-select">
+                    <option value="monthly_loans">1. Rekapitulasi Peminjaman & Sirkulasi Buku Bulanan</option>
+                    <option value="monthly_visits">2. Rekapitulasi Bulanan Kunjungan Perpustakaan</option>
+                    <option value="book_inventory">3. Laporan Data Katalog & Koleksi Buku Perpustakaan</option>
+                  </select>
+                </div>
+                <div class="form-col" id="colReportMonth">
+                  <label>Bulan:</label>
+                  <select id="reportMonthSelect" onchange="generateReportPreview()" class="custom-select">
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                  </select>
+                </div>
+                <div class="form-col">
+                  <label>Tahun:</label>
+                  <select id="reportYearSelect" onchange="generateReportPreview()" class="custom-select">
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                  </select>
+                </div>
+                <div class="form-col" id="colReportCategory" style="display:none;">
+                  <label>Filter Kategori:</label>
+                  <select id="reportCategoryFilter" onchange="generateReportPreview()" class="custom-select">
+                    <option value="all">Semua Kategori</option>
+                    <option value="Fiksi">Fiksi</option>
+                    <option value="Non-Fiksi">Non-Fiksi</option>
+                    <option value="Pelajaran">Pelajaran</option>
+                    <option value="Referensi">Referensi</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Print Preview Container (Standar A4 Kedinasan) -->
+            <div class="printable-wrapper">
+              <div id="printableDocument" class="official-report-sheet">
+                <!-- Kop Surat Resmi SDN Cipinang Melayu 03 Pagi -->
+                <div class="kop-surat">
+                  <div class="kop-logo-left">
+                    <img id="kopSchoolLogo" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Logo Sekolah" class="kop-img">
+                  </div>
+                  <div class="kop-text">
+                    <h4 class="kop-provinsi">PEMERINTAH PROVINSI DAERAH KHUSUS IBUKOTA JAKARTA</h4>
+                    <h4 class="kop-sudin">DINAS PENDIDIKAN</h4>
+                    <h4 class="kop-wilayah">SUKU DINAS PENDIDIKAN WILAYAH I KOTA ADMINISTRASI JAKARTA TIMUR</h4>
+                    <h2 class="kop-sekolah" id="kopSchoolName">SEKOLAH DASAR NEGERI CIPINANG MELAYU 03 PAGI</h2>
+                    <p class="kop-npsn">NPSN: <span id="kopNpsn">20108862</span> | Akreditasi: A</p>
+                    <p class="kop-alamat" id="kopSchoolAddress">
+                      Jl. Manunggal II RT.003/RW.02, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, DKI Jakarta 13620
+                    </p>
+                  </div>
+                </div>
+                <div class="kop-line-double"></div>
+
+                <!-- Report Title & Metadata -->
+                <div class="report-meta-center">
+                  <h3 id="reportPreviewTitle" class="doc-title">REKAPITULASI PEMINJAMAN BUKU PERPUSTAKAAN</h3>
+                  <p id="reportPreviewSubtitle" class="doc-subtitle">Periode: Oktober 2026</p>
+                </div>
+
+                <!-- Report Summary Stats Box -->
+                <div id="reportSummaryStats" class="report-summary-box">
+                  <!-- Populated dynamically -->
+                </div>
+
+                <!-- Report Table Content -->
+                <div class="report-table-wrapper">
+                  <table class="report-print-table" id="reportPreviewTable">
+                    <thead>
+                      <!-- Populated dynamically -->
+                    </thead>
+                    <tbody>
+                      <!-- Populated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Signature Section (Tanda Tangan Resmi) -->
+                <div class="signature-section">
+                  <div class="signature-block">
+                    <p>Mengetahui,</p>
+                    <p class="sig-title">Kepala SDN Cipinang Melayu 03 Pagi</p>
+                    <div class="sig-space"></div>
+                    <p class="sig-name" id="sigHeadmasterName">Dra. Hj. Nurjanah, M.Pd</p>
+                    <p class="sig-nip">NIP. <span id="sigHeadmasterNip">196805121993032004</span></p>
+                  </div>
+
+                  <div class="signature-block">
+                    <p id="sigDateLocation">Jakarta, 20 Oktober 2026</p>
+                    <p class="sig-title">Pengelola Perpustakaan Digipus</p>
+                    <div class="sig-space"></div>
+                    <p class="sig-name" id="sigLibrarianName">Siti Rahmawati, S.Pd</p>
+                    <p class="sig-nip">NIP. <span id="sigLibrarianNip">198502142010012015</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 6: PENGATURAN BIODATA & BACKEND -->
+          <div id="tabSettings" class="admin-tab-pane">
+            <div class="pane-header-action">
+              <div>
+                <h2 class="pane-title">Biodata Sekolah & Integrasi Google Drive / Sheet</h2>
+                <p class="pane-sub">Atur identitas resmi sekolah, logo, dan tautan Google Apps Script</p>
+              </div>
+              <button class="btn btn-primary" onclick="saveSchoolSettings()">
+                💾 Simpan Biodata & Pengaturan
+              </button>
+            </div>
+
+            <div class="settings-grid">
+              <!-- Kartu Biodata Sekolah -->
+              <div class="panel-box">
+                <div class="panel-header">
+                  <h3>🏫 Identitas Satuan Pendidikan</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label>Nama Sekolah:</label>
+                    <input type="text" id="settingSchoolName" class="custom-input" value="SDN Cipinang Melayu 03 Pagi">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nomor Pokok Sekolah Nasional (NPSN):</label>
+                    <input type="text" id="settingNpsn" class="custom-input" value="20108862">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Alamat Lengkap Sekolah:</label>
+                    <textarea id="settingSchoolAddress" rows="2" class="custom-textarea">Jl. Manunggal II RT.003/RW.02, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, DKI Jakarta 13620</textarea>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-col">
+                      <label>Nama Kepala Sekolah:</label>
+                      <input type="text" id="settingHeadmasterName" class="custom-input" value="Dra. Hj. Nurjanah, M.Pd">
+                    </div>
+                    <div class="form-col">
+                      <label>NIP Kepala Sekolah:</label>
+                      <input type="text" id="settingHeadmasterNip" class="custom-input" value="196805121993032004">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-col">
+                      <label>Nama Petugas / Pengelola Perpustakaan:</label>
+                      <input type="text" id="settingLibrarianName" class="custom-input" value="Siti Rahmawati, S.Pd">
+                    </div>
+                    <div class="form-col">
+                      <label>NIP Petugas Perpustakaan:</label>
+                      <input type="text" id="settingLibrarianNip" class="custom-input" value="198502142010012015">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Maksimal Durasi Peminjaman (Hari):</label>
+                    <input type="number" id="settingLoanDays" class="custom-input" value="7" min="1" max="30">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kartu Logo Sekolah & Google Apps Script Link -->
+              <div class="panel-box">
+                <div class="panel-header">
+                  <h3>🖼️ Logo Sekolah & Google Apps Script</h3>
+                </div>
+                <div class="panel-body">
+                  <!-- Logo Preview & Upload -->
+                  <div class="form-group">
+                    <label>Logo Sekolah:</label>
+                    <div class="logo-setting-preview">
+                      <img id="settingLogoPreview" src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Preview Logo" class="preview-logo-img">
+                      <div class="logo-upload-box">
+                        <input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
+                        <button type="button" class="btn btn-secondary-pill" onclick="document.getElementById('settingLogoFile').click()">
+                          📁 Pilih File Logo Baru
+                        </button>
+                        <small class="help-text">Format PNG atau JPG. Disimpan otomatis ke Google Drive subfolder School_Assets.</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Google Apps Script URL Integration -->
+                  <div class="form-group">
+                    <label>URL Web App Google Apps Script:</label>
+                    <input type="url" id="settingScriptUrl" class="custom-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+                    <small class="help-text">
+                      Tempelkan URL Web App hasil deploy dari file <code>backend/Code.gs</code>. Database Spreadsheet & Folder Drive akan terhubung otomatis.
+                    </small>
+                  </div>
+
+                  <div class="script-action-row">
+                    <button class="btn btn-success-pill" onclick="testBackendConnection()">
+                      ⚡ Tes Koneksi & Sinkronisasi
+                    </button>
+                    <button class="btn btn-secondary-pill" onclick="resetToDemoMode()">
+                      🔄 Mode Demo Lokal
+                    </button>
+                  </div>
+
+                  <!-- Cloud Folder Status Box -->
+                  <div class="cloud-status-box" id="cloudStatusBox">
+                    <div class="cloud-status-header">
+                      <span>📁 Status Penyimpanan Google:</span>
+                    </div>
+                    <ul class="cloud-status-list">
+                      <li>Spreadsheet Database: <strong id="statusSheetName">DB_Digipus_SDN_Cipinang_Melayu_03</strong></li>
+                      <li>Folder Utama Drive: <strong>Digipus_SDN_Cipinang_Melayu_03</strong></li>
+                      <li>Subfolder Drive 1: <strong>Ebook_Files (PDF Buku Digital)</strong></li>
+                      <li>Subfolder Drive 2: <strong>School_Assets (Logo & Lampiran)</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       MODALS
+       ======================================================== -->
+
+  <!-- MODAL 1: LOGIN ADMIN -->
+  <div id="modalLogin" class="modal-backdrop">
+    <div class="modal-card modal-sm">
+      <div class="modal-header">
+        <h3>🔐 Login Admin Digipus</h3>
+        <button class="modal-close" onclick="closeModal('modalLogin')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-sub">Khusus pengelola perpustakaan SDN Cipinang Melayu 03 Pagi</p>
+        <form onsubmit="handleAdminLoginSubmit(event)">
+          <div class="form-group">
+            <label>Username:</label>
+            <input type="text" id="loginUsername" class="custom-input" value="admin" required autofocus>
+          </div>
+          <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="loginPassword" class="custom-input" value="admin123" required>
+            <small class="help-text">Default bawaan: admin / admin123</small>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" id="btnSubmitLogin">
+            Masuk ke Dashboard
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: BUKU TAMU DIGITAL (PENGUNJUNG) -->
+  <div id="modalGuestBook" class="modal-backdrop">
+    <div class="modal-card modal-md">
+      <div class="modal-header">
+        <h3>📝 Buku Tamu Kunjungan Perpustakaan</h3>
+        <button class="modal-close" onclick="closeModal('modalGuestBook')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-sub">Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi. Silakan isi daftar hadir kehadiranmu ya! 😊</p>
+        <form onsubmit="handleGuestBookSubmit(event)">
+          <div class="form-group">
+            <label>Nama Lengkap:</label>
+            <input type="text" id="guestName" class="custom-input" placeholder="Contoh: Muhammad Rizki" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-col">
+              <label>Peran / Status:</label>
+              <select id="guestRole" class="custom-select" onchange="handleGuestRoleChange()">
+                <option value="Siswa">Siswa</option>
+                <option value="Guru">Guru</option>
+                <option value="Karyawan / Staf">Karyawan / Staf</option>
+                <option value="Tamu">Tamu Lainnya</option>
+              </select>
+            </div>
+
+            <div class="form-col" id="colGuestClass">
+              <label>Kelas:</label>
+              <select id="guestClass" class="custom-select">
+                <option value="Kelas 1A">Kelas 1A</option>
+                <option value="Kelas 1B">Kelas 1B</option>
+                <option value="Kelas 2A">Kelas 2A</option>
+                <option value="Kelas 2B">Kelas 2B</option>
+                <option value="Kelas 3A">Kelas 3A</option>
+                <option value="Kelas 3B">Kelas 3B</option>
+                <option value="Kelas 4A">Kelas 4A</option>
+                <option value="Kelas 4B">Kelas 4B</option>
+                <option value="Kelas 5A">Kelas 5A</option>
+                <option value="Kelas 5B">Kelas 5B</option>
+                <option value="Kelas 6A">Kelas 6A</option>
+                <option value="Kelas 6B">Kelas 6B</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tujuan Kunjungan:</label>
+            <select id="guestPurpose" class="custom-select">
+              <option value="Membaca Buku Cerita / Fiksi">Membaca Buku Cerita / Fiksi</option>
+              <option value="Membaca Buku Pelajaran / Tematik">Membaca Buku Pelajaran / Tematik</option>
+              <option value="Meminjam Buku">Meminjam Buku</option>
+              <option value="Mengembalikan Buku">Mengembalikan Buku</option>
+              <option value="Mengerjakan Tugas / Belajar Kelompok">Mengerjakan Tugas / Belajar Kelompok</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">
+            ✨ Kirim Kehadiran
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: TAMBAH / EDIT BUKU -->
+  <div id="modalBookForm" class="modal-backdrop">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3 id="modalBookFormTitle">📚 Tambah Buku Baru</h3>
+        <button class="modal-close" onclick="closeModal('modalBookForm')">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="bookForm" onsubmit="handleBookFormSubmit(event)">
+          <input type="hidden" id="bookFormId">
+
+          <div class="form-row">
+            <div class="form-col-2">
+              <div class="form-group">
+                <label>Judul Buku: *</label>
+                <input type="text" id="bookFormTitle" class="custom-input" placeholder="Masukkan judul buku lengkap" required>
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label>Kategori Buku: *</label>
+                <select id="bookFormCategory" class="custom-select" required>
+                  <option value="Fiksi">🦄 Fiksi & Cerita Anak</option>
+                  <option value="Non-Fiksi">🔬 Non-Fiksi & Sains</option>
+                  <option value="Pelajaran">📚 Pelajaran Tematik</option>
+                  <option value="Referensi">🏛️ Kamus & Referensi</option>
+                  <option value="Agama">🕌 Agama & Budi Pekerti</option>
+                  <option value="Lainnya">📦 Lainnya</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label>Jenis Buku: *</label>
+                <select id="bookFormType" class="custom-select" onchange="handleBookTypeChange()" required>
+                  <option value="Fisik">📦 Buku Fisik (Cetak)</option>
+                  <option value="Digital">⚡ Buku Digital (E-Book PDF)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-col" id="colBookStock">
+              <div class="form-group">
+                <label>Stok Eksemplar:</label>
+                <input type="number" id="bookFormStock" class="custom-input" value="5" min="0">
+              </div>
+            </div>
+
+            <div class="form-col">
+              <div class="form-group">
+                <label>Lokasi Rak / Lemari:</label>
+                <input type="text" id="bookFormLocation" class="custom-input" placeholder="Misal: Rak A1 / Tematik 4">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label>Pengarang:</label>
+                <input type="text" id="bookFormAuthor" class="custom-input" placeholder="Nama penulis / pengarang">
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label>Penerbit:</label>
+                <input type="text" id="bookFormPublisher" class="custom-input" placeholder="Penerbit buku">
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label>Tahun Terbit:</label>
+                <input type="number" id="bookFormYear" class="custom-input" value="2024">
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label>ISBN / No. Seri:</label>
+                <input type="text" id="bookFormIsbn" class="custom-input" placeholder="978-...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Cover Image Upload / URL -->
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label>URL Gambar Sampul (Cover):</label>
+                <input type="url" id="bookFormCoverUrl" class="custom-input" placeholder="https://... atau upload file">
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label>Upload Sampul Baru (Otomatis ke Drive):</label>
+                <input type="file" id="bookFormCoverFile" class="custom-input" accept="image/*" onchange="handleCoverFileSelected(event)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Digital PDF Section (Only visible for digital type) -->
+          <div id="sectionDigitalFile" class="digital-file-box" style="display:none;">
+            <div class="form-row">
+              <div class="form-col">
+                <div class="form-group">
+                  <label>URL File E-Book (Google Drive / Link):</label>
+                  <input type="url" id="bookFormFileUrl" class="custom-input" placeholder="https://drive.google.com/file/d/...">
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group">
+                  <label>Atau Upload File PDF ke Drive (Subfolder Ebook_Files):</label>
+                  <input type="file" id="bookFormEbookFile" class="custom-input" accept=".pdf" onchange="handleEbookFileSelected(event)">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Sinopsis / Deskripsi Singkat:</label>
+            <textarea id="bookFormSynopsis" rows="2" class="custom-textarea" placeholder="Ringkasan isi buku atau pesan edukatif"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary-pill" onclick="closeModal('modalBookForm')">Batal</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveBook">💾 Simpan Buku</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: CATAT PEMINJAMAN -->
+  <div id="modalLoanForm" class="modal-backdrop">
+    <div class="modal-card modal-md">
+      <div class="modal-header">
+        <h3>🔄 Catat Peminjaman Buku</h3>
+        <button class="modal-close" onclick="closeModal('modalLoanForm')">✕</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="handleLoanFormSubmit(event)">
+          <div class="form-group">
+            <label>Pilih Buku yang Dipinjam: *</label>
+            <select id="loanFormBookSelect" class="custom-select" required>
+              <!-- Filled with available physical books -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Nama Peminjam: *</label>
+            <input type="text" id="loanFormMemberName" class="custom-input" placeholder="Nama siswa atau guru" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-col">
+              <label>Peran:</label>
+              <select id="loanFormMemberRole" class="custom-select">
+                <option value="Siswa">Siswa</option>
+                <option value="Guru">Guru</option>
+                <option value="Karyawan">Karyawan</option>
+              </select>
+            </div>
+            <div class="form-col">
+              <label>Kelas / Jabatan:</label>
+              <input type="text" id="loanFormGrade" class="custom-input" placeholder="Misal: Kelas 4B / Guru Olahraga" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-col">
+              <label>Tanggal Pinjam:</label>
+              <input type="date" id="loanFormDate" class="custom-input" required>
+            </div>
+            <div class="form-col">
+              <label>Tenggat Waktu Kembali:</label>
+              <input type="date" id="loanFormDueDate" class="custom-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Catatan Tambahan:</label>
+            <input type="text" id="loanFormNotes" class="custom-input" placeholder="Catatan kondisi buku atau keperluan tugas">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary-pill" onclick="closeModal('modalLoanForm')">Batal</button>
+            <button type="submit" class="btn btn-primary">✅ Catat Peminjaman</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5: DETAIL BUKU / BACA DIGITAL -->
+  <div id="modalBookDetail" class="modal-backdrop">
+    <div class="modal-card modal-md">
+      <div class="modal-header">
+        <h3 id="detailBookTitle">Detail Buku</h3>
+        <button class="modal-close" onclick="closeModal('modalBookDetail')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-book-layout">
+          <img id="detailBookCover" src="" alt="Cover" class="detail-book-img">
+          <div class="detail-book-info">
+            <div class="badge-row">
+              <span id="detailBookCategory" class="badge-pill badge-fiksi">Fiksi</span>
+              <span id="detailBookType" class="badge-pill badge-digital">Digital</span>
+            </div>
+            <p><strong>Pengarang:</strong> <span id="detailBookAuthor">-</span></p>
+            <p><strong>Penerbit:</strong> <span id="detailBookPublisher">-</span> (<span id="detailBookYear">-</span>)</p>
+            <p><strong>ISBN:</strong> <span id="detailBookIsbn">-</span></p>
+            <p><strong>Lokasi / Rak:</strong> <span id="detailBookLocation">-</span></p>
+            <p><strong>Status Ketersediaan:</strong> <span id="detailBookStock">-</span></p>
+          </div>
+        </div>
+        <div class="synopsis-box">
+          <h4>Sinopsis Buku:</h4>
+          <p id="detailBookSynopsis">-</p>
+        </div>
+
+        <div id="detailDigitalAction" class="detail-action-bar" style="display:none;">
+          <a id="btnReadDigital" href="#" target="_blank" class="btn btn-success-pill w-100">
+            📖 Buka & Baca E-Book Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/api.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
