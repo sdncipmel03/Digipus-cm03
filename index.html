@@ -1,24 +1,64 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digipus - Perpustakaan Digital SDN Cipinang Melayu 03 Pagi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <!-- Chart.js for beautiful analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="theme-light">
+
+  <script>
+    /* Logo Resmi SDN Cipinang Melayu 03 Pagi — diterapkan segera sebelum DOM siap */
+    (function() {
+      var LOGO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><circle cx='200' cy='200' r='185' fill='%23e21b23'/><circle cx='200' cy='200' r='132' fill='%23ffffff'/><circle cx='200' cy='200' r='126' fill='none' stroke='%23e21b23' stroke-width='3.5'/><defs><path id='pathTop' d='M 42,200 A 158,158 0 0,1 358,200' fill='none'/><path id='pathBottom' d='M 358,200 A 158,158 0 0,1 42,200' fill='none'/></defs><polygon points='43,200 46,207 54,207 48,212 50,220 43,215 36,220 38,212 32,207 40,207' fill='%23ffffff' transform='rotate(-10 43 210)'/><polygon points='357,200 360,207 368,207 362,212 364,220 357,215 350,220 352,212 346,207 354,207' fill='%23ffffff' transform='rotate(10 357 210)'/><text fill='%23ffffff' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='22' letter-spacing='2.5'><textPath href='%23pathTop' startOffset='50%25' text-anchor='middle'>SEKOLAH DASAR NEGERI</textPath></text><text fill='%23ffffff' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='20.5' letter-spacing='2'><textPath href='%23pathBottom' startOffset='50%25' text-anchor='middle'>CIPINANG MELAYU 03 PAGI</textPath></text><polygon points='200,122 204,134 216,134 207,142 210,154 200,147 190,154 193,142 184,134 196,134' fill='%23f4b400'/><polygon points='175,138 178,145 186,145 180,150 182,158 175,153 168,158 170,150 164,145 172,145' fill='%23f4b400' transform='rotate(-15 175 148)'/><polygon points='225,138 228,145 236,145 230,150 232,158 225,153 218,158 220,150 214,145 222,145' fill='%23f4b400' transform='rotate(15 225 148)'/><path d='M 200,172 C 182,156 150,155 125,178 C 145,174 175,172 200,183 C 225,172 255,174 275,178 C 250,155 218,156 200,172 Z' fill='%2300853f'/><circle cx='154' cy='208' r='18' fill='%231b65b6'/><path d='M 154,226 C 142,226 130,230 120,227 C 117,226 122,233 128,239 C 138,248 144,242 144,258 L 138,278 C 137,282 144,282 146,278 L 153,260 L 160,278 C 162,282 169,282 168,278 L 162,258 C 162,244 170,238 188,214 C 189,212 184,213 178,218 C 168,226 160,226 154,226 Z' fill='%231b65b6'/><circle cx='242' cy='210' r='17' fill='%231b65b6'/><path d='M 230,206 C 218,202 210,210 214,217 C 218,222 225,214 229,212 Z' fill='%231b65b6'/><path d='M 254,206 C 266,202 274,210 270,217 C 266,222 259,214 255,212 Z' fill='%231b65b6'/><path d='M 242,226 C 236,226 230,228 220,221 C 214,217 212,219 216,224 C 224,233 232,238 232,246 L 225,264 C 224,266 226,267 229,267 L 257,267 C 260,267 262,266 261,264 L 254,246 C 254,238 262,233 274,225 C 278,222 276,219 270,222 C 260,228 248,226 242,226 Z' fill='%231b65b6'/><path d='M 235,267 L 233,280 C 232,283 238,283 239,280 L 241,267 Z M 249,267 L 251,280 C 252,283 258,283 257,280 L 255,267 Z' fill='%231b65b6'/></svg>";
+      window._DIGIPUS_LOGO_SVG = LOGO;
+      window.DEFAULT_LOGO_SVG = LOGO;
+      /* Langsung pasang ke semua elemen gambar logo yang sudah ada di DOM */
+      document.addEventListener('DOMContentLoaded', function() {
+        ['loaderSchoolLogo','navSchoolLogo','kopSchoolLogo','settingLogoPreview','loginModalLogo'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && (!el.src || el.src === '' || el.src === window.location.href)) el.src = LOGO;
+        });
+      });
+    })();
+  </script>
+
+  <!-- PAGE LOADER ANIMATION (HALUS & MODERN) -->
+  <div id="pageLoader" class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo-ring">
+        <img id="loaderSchoolLogo"
+          src="" alt="Logo SDN Cipinang Melayu 03 Pagi" class="loader-logo-img"
+          onerror="this.onerror=null;this.src=window.DEFAULT_LOGO_SVG;">
+        <div class="spinner-ring"></div>
+      </div>
+      <h3 class="loader-title">Digipus</h3>
+      <p class="loader-school">SDN Cipinang Melayu 03 Pagi</p>
+      <div class="loader-progress-bar">
+        <div class="loader-progress-inner"></div>
+      </div>
+      <span class="loader-status-text" id="loaderStatusText">Memuat data perpustakaan...</span>
+    </div>
+  </div>
 
   <!-- TOP ANNOUNCEMENT BAR / CONNECTION STATUS -->
   <header class="top-nav-bar">
     <div class="nav-container">
       <div class="brand-group">
         <div class="logo-wrapper" id="brandLogoContainer">
-          <img id="navSchoolLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Logo SDN Cipinang Melayu 03 Pagi" class="school-logo" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
+          <img id="navSchoolLogo"
+            src="" alt="Logo SDN Cipinang Melayu 03 Pagi" class="school-logo"
+            onerror="this.onerror=null;this.src=window.DEFAULT_LOGO_SVG;">
         </div>
         <div class="brand-text">
           <div class="brand-title">
@@ -61,7 +101,8 @@
           <span class="hero-tag">🌟 Jendela Ilmu & Inspirasi Siswa</span>
           <h1 class="hero-title">Membaca Cerdas, Meraih Prestasi di <span class="highlight-text">Digipus</span></h1>
           <p class="hero-desc">
-            Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi! Temukan beragam buku cerita fiksi, ensiklopedia sains, komik edukasi, dan buku pelajaran tematik yang siap menemani belajarmu.
+            Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi! Temukan beragam buku cerita fiksi, ensiklopedia
+            sains, komik edukasi, dan buku pelajaran tematik yang siap menemani belajarmu.
           </p>
 
           <div class="hero-stats-row">
@@ -95,7 +136,8 @@
               <small>E-Book Digital</small>
             </div>
           </div>
-          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80" alt="Membaca Buku" class="hero-img">
+          <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80"
+            alt="Membaca Buku" class="hero-img">
         </div>
       </div>
 
@@ -103,7 +145,8 @@
       <div class="catalog-toolbar">
         <div class="search-box-wrapper">
           <span class="search-icon">🔍</span>
-          <input type="text" id="publicSearchInput" placeholder="Cari judul buku, nama pengarang, atau topik pelajaran..." oninput="handlePublicSearch()">
+          <input type="text" id="publicSearchInput"
+            placeholder="Cari judul buku, nama pengarang, atau topik pelajaran..." oninput="handlePublicSearch()">
           <button class="clear-search-btn" id="clearSearchBtn" onclick="clearPublicSearch()">✕</button>
         </div>
 
@@ -112,9 +155,12 @@
           <div class="pill-filters" id="publicCategoryPills">
             <button class="pill-btn active" data-cat="all" onclick="filterPublicCategory('all')">Semua Kategori</button>
             <button class="pill-btn" data-cat="Fiksi" onclick="filterPublicCategory('Fiksi')">🦄 Fiksi & Cerita</button>
-            <button class="pill-btn" data-cat="Non-Fiksi" onclick="filterPublicCategory('Non-Fiksi')">🔬 Non-Fiksi & Sains</button>
-            <button class="pill-btn" data-cat="Pelajaran" onclick="filterPublicCategory('Pelajaran')">📚 Tematik & Pelajaran</button>
-            <button class="pill-btn" data-cat="Referensi" onclick="filterPublicCategory('Referensi')">🏛️ Kamus & Referensi</button>
+            <button class="pill-btn" data-cat="Non-Fiksi" onclick="filterPublicCategory('Non-Fiksi')">🔬 Non-Fiksi &
+              Sains</button>
+            <button class="pill-btn" data-cat="Pelajaran" onclick="filterPublicCategory('Pelajaran')">📚 Tematik &
+              Pelajaran</button>
+            <button class="pill-btn" data-cat="Referensi" onclick="filterPublicCategory('Referensi')">🏛️ Kamus &
+              Referensi</button>
           </div>
 
           <!-- Filter Format: Fisik / Digital -->
@@ -189,7 +235,8 @@
             <div class="dashboard-top-bar">
               <div>
                 <h2 class="pane-title">Statistik Perpustakaan</h2>
-                <p class="pane-sub">Ringkasan aktivitas koleksi, sirkulasi peminjaman, dan kunjungan di SDN Cipinang Melayu 03 Pagi</p>
+                <p class="pane-sub">Ringkasan aktivitas koleksi, sirkulasi peminjaman, dan kunjungan di SDN Cipinang
+                  Melayu 03 Pagi</p>
               </div>
               <button class="btn btn-secondary-pill" onclick="refreshAllData()">
                 🔄 Perbarui Data
@@ -301,7 +348,8 @@
             <div class="filter-bar">
               <div class="search-input-group">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="adminBookSearch" placeholder="Cari buku berdasarkan judul, pengarang, ISBN..." oninput="handleAdminBookFilter()">
+                <input type="text" id="adminBookSearch" placeholder="Cari buku berdasarkan judul, pengarang, ISBN..."
+                  oninput="handleAdminBookFilter()">
               </div>
               <select id="adminBookCatFilter" onchange="handleAdminBookFilter()" class="custom-select">
                 <option value="all">Semua Kategori</option>
@@ -359,7 +407,8 @@
             <div class="filter-bar">
               <div class="search-input-group">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="loanSearchInput" placeholder="Cari peminjam, kelas, atau judul buku..." oninput="handleLoanFilter()">
+                <input type="text" id="loanSearchInput" placeholder="Cari peminjam, kelas, atau judul buku..."
+                  oninput="handleLoanFilter()">
               </div>
               <select id="loanStatusFilter" onchange="handleLoanFilter()" class="custom-select">
                 <option value="all">Semua Status</option>
@@ -408,7 +457,8 @@
             <div class="filter-bar">
               <div class="search-input-group">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="visitSearchInput" placeholder="Cari nama pengunjung atau kelas..." oninput="handleVisitFilter()">
+                <input type="text" id="visitSearchInput" placeholder="Cari nama pengunjung atau kelas..."
+                  oninput="handleVisitFilter()">
               </div>
               <input type="date" id="visitDateFilter" onchange="handleVisitFilter()" class="custom-input">
             </div>
@@ -439,7 +489,8 @@
             <div class="pane-header-action">
               <div>
                 <h2 class="pane-title">Cetak Laporan & Rekapitulasi Rapi</h2>
-                <p class="pane-sub">Cetak dan unduh laporan resmi perpustakaan berformat standar kedinasan dengan Kop Surat SDN Cipinang Melayu 03 Pagi</p>
+                <p class="pane-sub">Cetak dan unduh laporan resmi perpustakaan berformat standar kedinasan dengan Kop
+                  Surat SDN Cipinang Melayu 03 Pagi</p>
               </div>
               <div class="header-button-group">
                 <button class="btn btn-primary" onclick="triggerReportPrint()">
@@ -504,14 +555,17 @@
                 <div id="kopSuratWrapper">
                   <!-- Mode A: Banner Gambar Kop Surat (Jika Diunggah Sekolah) -->
                   <div id="kopImageContainer" class="kop-image-banner" style="display:none;">
-                    <img id="kopUploadedBanner" src="" alt="Kop Surat Resmi SDN Cipinang Melayu 03 Pagi" class="kop-banner-img">
+                    <img id="kopUploadedBanner" src="" alt="Kop Surat Resmi SDN Cipinang Melayu 03 Pagi"
+                      class="kop-banner-img">
                   </div>
 
                   <!-- Mode B: Format Teks Resmi Kedinasan Simetris Rapi -->
                   <div id="kopTextContainer">
                     <div class="kop-surat">
                       <div class="kop-logo-side kop-logo-left">
-                        <img id="kopSchoolLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Logo Sekolah" class="kop-img" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
+                        <img id="kopSchoolLogo"
+                          src="" alt="Logo Sekolah" class="kop-img"
+                          onerror="this.onerror=null;this.src=window.DEFAULT_LOGO_SVG;">
                       </div>
                       <div class="kop-text">
                         <h4 class="kop-provinsi">PEMERINTAH PROVINSI DAERAH KHUSUS IBUKOTA JAKARTA</h4>
@@ -520,7 +574,8 @@
                         <h2 class="kop-sekolah" id="kopSchoolName">SEKOLAH DASAR NEGERI CIPINANG MELAYU 03 PAGI</h2>
                         <p class="kop-npsn">NPSN: <span id="kopNpsn">20104331</span> | Akreditasi: A</p>
                         <p class="kop-alamat" id="kopSchoolAddress">
-                          Jl. Kartika Eka Paksi KPAD Jatiwaringin RT.010/006 Kel. Cipinang Melayu Kec. Makasar Jakarta Timur
+                          Jl. Kartika Eka Paksi KPAD Jatiwaringin RT.010/006 Kel. Cipinang Melayu Kec. Makasar Jakarta
+                          Timur
                         </p>
                       </div>
                       <div class="kop-logo-side kop-logo-right">
@@ -528,8 +583,10 @@
                           <circle cx="50" cy="50" r="46" fill="#0284c7" />
                           <path d="M50 18 L76 72 L24 72 Z" fill="#facc15" />
                           <circle cx="50" cy="48" r="14" fill="#ffffff" />
-                          <path d="M42 48 L48 54 L58 42" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                          <text x="50" y="86" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="#ffffff">PENDIDIKAN</text>
+                          <path d="M42 48 L48 54 L58 42" stroke="#0284c7" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                          <text x="50" y="86" font-size="9" font-family="sans-serif" font-weight="bold"
+                            text-anchor="middle" fill="#ffffff">PENDIDIKAN</text>
                         </svg>
                       </div>
                     </div>
@@ -613,13 +670,15 @@
 
                   <div class="form-group">
                     <label>Alamat Lengkap Sekolah:</label>
-                    <textarea id="settingSchoolAddress" rows="2" class="custom-textarea">Jl. Manunggal II RT.003/RW.02, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, DKI Jakarta 13620</textarea>
+                    <textarea id="settingSchoolAddress" rows="2"
+                      class="custom-textarea">Jl. Manunggal II RT.003/RW.02, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, DKI Jakarta 13620</textarea>
                   </div>
 
                   <div class="form-row">
                     <div class="form-col">
                       <label>Nama Kepala Sekolah:</label>
-                      <input type="text" id="settingHeadmasterName" class="custom-input" value="Dra. Hj. Nurjanah, M.Pd">
+                      <input type="text" id="settingHeadmasterName" class="custom-input"
+                        value="Dra. Hj. Nurjanah, M.Pd">
                     </div>
                     <div class="form-col">
                       <label>NIP Kepala Sekolah:</label>
@@ -655,59 +714,80 @@
                   <div class="form-group">
                     <label>Logo Sekolah (Navbar & Profil):</label>
                     <div class="logo-setting-preview">
-                      <img id="settingLogoPreview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>" alt="Preview Logo" class="preview-logo-img" onerror="this.onerror=null; this.src=window.DEFAULT_LOGO_SVG;">
+                      <img id="settingLogoPreview"
+                        src="" alt="Preview Logo" class="preview-logo-img"
+                        onerror="this.onerror=null;this.src=window.DEFAULT_LOGO_SVG;">
                       <div class="logo-upload-box">
-                        <input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
-                        <button type="button" class="btn btn-secondary-pill" onclick="document.getElementById('settingLogoFile').click()">
+                        <input type="file" id="settingLogoFile" accept="image/*" onchange="handleLogoUpload(event)"
+                          style="display:none;">
+                        <button type="button" class="btn btn-secondary-pill"
+                          onclick="document.getElementById('settingLogoFile').click()">
                           📁 Pilih File Logo Baru
                         </button>
                         <button type="button" class="btn btn-sm btn-link" onclick="resetDefaultLogo()">
                           Kembalikan Logo Standar
                         </button>
-                        <small class="help-text">Format PNG/JPG transparan. Otomatis dikompres & disimpan aman.</small>
+                        <small class="help-text">✨ <strong>Upload Langsung:</strong> Format PNG/JPG. Otomatis dikompres
+                          & langsung tersimpan permanen.</small>
                       </div>
                     </div>
                   </div>
 
                   <!-- 2. Pengaturan Kop Surat Laporan PDF -->
-                  <div class="form-group" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                  <div class="form-group"
+                    style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
                     <label>Pilihan Format Kop Surat Laporan:</label>
                     <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
                       <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal; cursor:pointer;">
-                        <input type="radio" name="kopModeRadio" value="text" id="radioKopText" onchange="handleKopModeChange('text')" checked style="margin-top:4px;">
-                        <span><strong>Mode Teks Kedinasan Otomatis:</strong> Format teks resmi simetris dan rapi standar Dinas Pendidikan dengan logo di kiri & kanan.</span>
+                        <input type="radio" name="kopModeRadio" value="text" id="radioKopText"
+                          onchange="handleKopModeChange('text')" checked style="margin-top:4px;">
+                        <span><strong>Mode Teks Kedinasan Otomatis:</strong> Format teks resmi simetris dan rapi standar
+                          Dinas Pendidikan dengan logo di kiri & kanan.</span>
                       </label>
                       <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal; cursor:pointer;">
-                        <input type="radio" name="kopModeRadio" value="image" id="radioKopImage" onchange="handleKopModeChange('image')" style="margin-top:4px;">
-                        <span><strong>Mode Gambar Kop Surat Sekolah:</strong> Upload file gambar banner Kop Surat resmi sekolah (PNG/JPG).</span>
+                        <input type="radio" name="kopModeRadio" value="image" id="radioKopImage"
+                          onchange="handleKopModeChange('image')" style="margin-top:4px;">
+                        <span><strong>Mode Gambar Kop Surat Sekolah:</strong> Upload file gambar banner Kop Surat resmi
+                          sekolah (PNG/JPG).</span>
                       </label>
                     </div>
 
                     <!-- Upload Gambar Kop Surat -->
-                    <div id="sectionUploadKopImage" style="background:#f8fafc; border:1px dashed var(--border-color); border-radius:var(--radius-sm); padding:14px; display:none;">
+                    <div id="sectionUploadKopImage"
+                      style="background:#f8fafc; border:1px dashed var(--border-color); border-radius:var(--radius-sm); padding:14px; display:none;">
                       <div style="margin-bottom:10px;">
-                        <img id="settingKopPreview" src="" alt="Pratinjau Kop Surat" style="max-width:100%; max-height:90px; object-fit:contain; border:1px solid #cbd5e1; background:#ffffff; display:none; margin-bottom:8px;">
-                        <span id="kopEmptyNotice" style="font-size:0.85rem; color:var(--muted-text); font-style:italic; display:block;">Belum ada gambar kop surat yang diunggah.</span>
+                        <img id="settingKopPreview" src="" alt="Pratinjau Kop Surat"
+                          style="max-width:100%; max-height:90px; object-fit:contain; border:1px solid #cbd5e1; background:#ffffff; display:none; margin-bottom:8px;">
+                        <span id="kopEmptyNotice"
+                          style="font-size:0.85rem; color:var(--muted-text); font-style:italic; display:block;">Belum
+                          ada gambar kop surat yang diunggah.</span>
                       </div>
-                      <input type="file" id="settingKopFile" accept="image/*" onchange="handleKopImageUpload(event)" style="display:none;">
+                      <input type="file" id="settingKopFile" accept="image/*" onchange="handleKopImageUpload(event)"
+                        style="display:none;">
                       <div style="display:flex; gap:8px;">
-                        <button type="button" class="btn btn-sm btn-secondary-pill" onclick="document.getElementById('settingKopFile').click()">
+                        <button type="button" class="btn btn-sm btn-secondary-pill"
+                          onclick="document.getElementById('settingKopFile').click()">
                           📁 Upload Gambar Kop Surat (Banner)
                         </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveKopImage" onclick="removeKopImage()" style="display:none;">
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveKopImage"
+                          onclick="removeKopImage()" style="display:none;">
                           Hapus Gambar
                         </button>
                       </div>
-                      <small class="help-text">Rekomendasi rasio banner memanjang (misal: lebar 1000-1200px, tinggi 150-250px).</small>
+                      <small class="help-text">✨ <strong>Upload Langsung:</strong> Rasio banner memanjang (1000-1200px).
+                        Otomatis dikompres & langsung tersimpan ke sistem.</small>
                     </div>
                   </div>
 
                   <!-- Google Apps Script URL Integration -->
-                  <div class="form-group" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                  <div class="form-group"
+                    style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-color);">
                     <label>URL Web App Google Apps Script:</label>
-                    <input type="url" id="settingScriptUrl" class="custom-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+                    <input type="url" id="settingScriptUrl" class="custom-input"
+                      placeholder="https://script.google.com/macros/s/AKfycb.../exec">
                     <small class="help-text">
-                      Tempelkan URL Web App hasil deploy dari file <code>backend/Code.gs</code>. Database Spreadsheet & Folder Drive akan terhubung otomatis.
+                      Tempelkan URL Web App hasil deploy dari file <code>backend/Code.gs</code>. Database Spreadsheet &
+                      Folder Drive akan terhubung otomatis.
                     </small>
                   </div>
 
@@ -726,11 +806,32 @@
                       <span>📁 Status Penyimpanan Google:</span>
                     </div>
                     <ul class="cloud-status-list">
-                      <li>Spreadsheet Database: <strong id="statusSheetName">DB_Digipus_SDN_Cipinang_Melayu_03</strong></li>
+                      <li>Spreadsheet Database: <strong id="statusSheetName">DB_Digipus_SDN_Cipinang_Melayu_03</strong>
+                      </li>
                       <li>Folder Utama Drive: <strong>Digipus_SDN_Cipinang_Melayu_03</strong></li>
                       <li>Subfolder Drive 1: <strong>Ebook_Files (PDF Buku Digital)</strong></li>
                       <li>Subfolder Drive 2: <strong>School_Assets (Logo & Lampiran)</strong></li>
                     </ul>
+                  </div>
+
+                  <!-- Multi-Device Auto-Connect Share Box (Cukup 1x untuk semua perangkat) -->
+                  <div class="multi-device-share-box" id="multiDeviceShareBox" style="margin-top: 16px; background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: var(--radius-sm); padding: 14px; display: none;">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                      <span style="font-size:1.2rem;">📱</span>
+                      <strong style="color:#1e40af; font-size:0.9rem;">Tautan Otomatis untuk Handphone & Komputer Lain:</strong>
+                    </div>
+                    <p style="font-size:0.8rem; color:#334155; margin-bottom:10px;">
+                      Buka tautan ini di Handphone (HP) atau laptop lain <strong>hanya sekali</strong>. Perangkat tersebut akan <strong>otomatis tersimpan & langsung terhubung</strong> ke Google Drive & Database tanpa perlu mengetik URL lagi!
+                    </p>
+                    <div style="display:flex; gap:8px; margin-bottom:8px;">
+                      <input type="text" id="multiDeviceShareUrl" class="custom-input" readonly style="font-size:0.8rem; background:#ffffff; font-family:monospace;" onclick="this.select()">
+                      <button type="button" class="btn btn-sm btn-primary" onclick="copyMultiDeviceShareUrl()">
+                        📋 Salin Tautan HP
+                      </button>
+                    </div>
+                    <small style="font-size:0.75rem; color:#64748b; display:block;">
+                      💡 <em>Tips: Anda juga dapat memasukkan URL Web App ke berkas <code>frontend/js/config.js</code> agar permanen untuk seluruh pengguna.</em>
+                    </small>
                   </div>
                 </div>
               </div>
@@ -747,29 +848,70 @@
        MODALS
        ======================================================== -->
 
-  <!-- MODAL 1: LOGIN ADMIN -->
+  <!-- MODAL 1: LOGIN ADMIN (DESAIN PROFESIONAL) -->
   <div id="modalLogin" class="modal-backdrop">
-    <div class="modal-card modal-sm">
-      <div class="modal-header">
-        <h3>🔐 Login Admin Digipus</h3>
-        <button class="modal-close" onclick="closeModal('modalLogin')">✕</button>
+    <div class="modal-card modal-login-card">
+      <div class="login-brand-header">
+        <button class="modal-close modal-close-white" onclick="closeModal('modalLogin')" title="Tutup">✕</button>
+        <div class="login-logo-glow">
+          <img id="loginModalLogo"
+            src="" alt="Logo SDN Cipinang Melayu 03 Pagi" class="login-header-logo"
+            onerror="this.onerror=null;this.src=window.DEFAULT_LOGO_SVG;">
+        </div>
+        <div class="login-header-text">
+          <span class="badge-login-portal">PORTAL PENGELOLA RESMI</span>
+          <h2 class="login-title">Digipus Admin</h2>
+          <p class="login-subtitle">SDN Cipinang Melayu 03 Pagi</p>
+        </div>
       </div>
-      <div class="modal-body">
-        <p class="modal-sub">Khusus pengelola perpustakaan SDN Cipinang Melayu 03 Pagi</p>
+
+      <div class="modal-body login-body">
         <form onsubmit="handleAdminLoginSubmit(event)">
-          <div class="form-group">
-            <label>Username:</label>
-            <input type="text" id="loginUsername" class="custom-input" value="admin" required autofocus>
+          <div class="form-group-pro">
+            <label for="loginUsername">ID / Username Pengelola</label>
+            <div class="input-icon-group">
+              <span class="input-ico">👤</span>
+              <input type="text" id="loginUsername" class="custom-input-pro" placeholder="Masukkan username admin"
+                value="admin" required autocomplete="username">
+            </div>
           </div>
-          <div class="form-group">
-            <label>Password:</label>
-            <input type="password" id="loginPassword" class="custom-input" value="admin123" required>
-            <small class="help-text">Default bawaan: admin / admin123</small>
+
+          <div class="form-group-pro">
+            <div class="label-split">
+              <label for="loginPassword">Kata Sandi (Password)</label>
+              <button type="button" class="btn-toggle-pwd" id="btnToggleLoginPwd"
+                onclick="togglePasswordVisibility('loginPassword', this)">
+                👁️ Tampilkan
+              </button>
+            </div>
+            <div class="input-icon-group">
+              <span class="input-ico">🔒</span>
+              <input type="password" id="loginPassword" class="custom-input-pro" placeholder="Masukkan password admin"
+                value="admin123" required autocomplete="current-password">
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary w-100" id="btnSubmitLogin">
-            Masuk ke Dashboard
+
+          <div class="login-security-badge">
+            <span class="sec-dot"></span>
+            <span>Sesi Terenkripsi & Terintegrasi Google Cloud</span>
+          </div>
+
+          <button type="submit" class="btn btn-login-submit w-100" id="btnSubmitLogin">
+            <span class="btn-login-text">Masuk ke Dashboard Pengelola</span>
+            <span class="btn-login-arrow">➔</span>
           </button>
         </form>
+
+        <div class="login-quick-hint">
+          <div class="hint-header">
+            <span class="hint-ico">🔑</span>
+            <span>Kredensial Default Pengelola:</span>
+          </div>
+          <div class="hint-badges">
+            <span class="code-pill">User: <strong>admin</strong></span>
+            <span class="code-pill">Pass: <strong>admin123</strong></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -782,7 +924,8 @@
         <button class="modal-close" onclick="closeModal('modalGuestBook')">✕</button>
       </div>
       <div class="modal-body">
-        <p class="modal-sub">Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi. Silakan isi daftar hadir kehadiranmu ya! 😊</p>
+        <p class="modal-sub">Selamat datang di Perpustakaan SDN Cipinang Melayu 03 Pagi. Silakan isi daftar hadir
+          kehadiranmu ya! 😊</p>
         <form onsubmit="handleGuestBookSubmit(event)">
           <div class="form-group">
             <label>Nama Lengkap:</label>
@@ -854,7 +997,8 @@
             <div class="form-col-2">
               <div class="form-group">
                 <label>Judul Buku: *</label>
-                <input type="text" id="bookFormTitle" class="custom-input" placeholder="Masukkan judul buku lengkap" required>
+                <input type="text" id="bookFormTitle" class="custom-input" placeholder="Masukkan judul buku lengkap"
+                  required>
               </div>
             </div>
             <div class="form-col">
@@ -925,18 +1069,36 @@
             </div>
           </div>
 
-          <!-- Cover Image Upload / URL -->
-          <div class="form-row">
-            <div class="form-col">
-              <div class="form-group">
-                <label>URL Gambar Sampul (Cover):</label>
-                <input type="url" id="bookFormCoverUrl" class="custom-input" placeholder="https://... atau upload file">
+          <!-- Cover Image Upload Langsung (Hilangkan URL Teks) -->
+          <div class="form-group book-cover-upload-section">
+            <label class="form-label-bold">🖼️ Sampul Buku (Cover):</label>
+            <div class="book-cover-dropzone-wrapper">
+              <div class="book-cover-preview-card" id="bookCoverPreviewCard">
+                <img id="bookFormCoverPreviewImg" src="" alt="Pratinjau Sampul" class="book-cover-preview-img"
+                  style="display:none;">
+                <div id="bookCoverPlaceholder" class="book-cover-placeholder">
+                  <span class="cover-icon">📖</span>
+                  <p class="placeholder-text">Belum ada cover</p>
+                  <small>Klik tombol untuk upload gambar</small>
+                </div>
               </div>
-            </div>
-            <div class="form-col">
-              <div class="form-group">
-                <label>Upload Sampul Baru (Otomatis ke Drive):</label>
-                <input type="file" id="bookFormCoverFile" class="custom-input" accept="image/*" onchange="handleCoverFileSelected(event)">
+
+              <div class="book-cover-actions">
+                <input type="file" id="bookFormCoverFile" accept="image/*" onchange="handleCoverFileSelected(event)"
+                  style="display:none;">
+                <button type="button" class="btn btn-primary-pill"
+                  onclick="document.getElementById('bookFormCoverFile').click()">
+                  📁 Pilih / Ganti File Cover
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveBookCover"
+                  onclick="removeBookCover()" style="display:none;">
+                  🗑️ Hapus Cover
+                </button>
+                <input type="hidden" id="bookFormCoverUrl">
+                <p class="help-text">
+                  ✨ <strong>Upload Langsung:</strong> Gambar seketika diproses ringan & tajam, langsung tampil dan
+                  tersimpan otomatis tanpa perlu URL.
+                </p>
               </div>
             </div>
           </div>
@@ -947,13 +1109,15 @@
               <div class="form-col">
                 <div class="form-group">
                   <label>URL File E-Book (Google Drive / Link):</label>
-                  <input type="url" id="bookFormFileUrl" class="custom-input" placeholder="https://drive.google.com/file/d/...">
+                  <input type="url" id="bookFormFileUrl" class="custom-input"
+                    placeholder="https://drive.google.com/file/d/...">
                 </div>
               </div>
               <div class="form-col">
                 <div class="form-group">
                   <label>Atau Upload File PDF ke Drive (Subfolder Ebook_Files):</label>
-                  <input type="file" id="bookFormEbookFile" class="custom-input" accept=".pdf" onchange="handleEbookFileSelected(event)">
+                  <input type="file" id="bookFormEbookFile" class="custom-input" accept=".pdf"
+                    onchange="handleEbookFileSelected(event)">
                 </div>
               </div>
             </div>
@@ -961,7 +1125,8 @@
 
           <div class="form-group">
             <label>Sinopsis / Deskripsi Singkat:</label>
-            <textarea id="bookFormSynopsis" rows="2" class="custom-textarea" placeholder="Ringkasan isi buku atau pesan edukatif"></textarea>
+            <textarea id="bookFormSynopsis" rows="2" class="custom-textarea"
+              placeholder="Ringkasan isi buku atau pesan edukatif"></textarea>
           </div>
 
           <div class="modal-footer">
@@ -1005,7 +1170,8 @@
             </div>
             <div class="form-col">
               <label>Kelas / Jabatan:</label>
-              <input type="text" id="loanFormGrade" class="custom-input" placeholder="Misal: Kelas 4B / Guru Olahraga" required>
+              <input type="text" id="loanFormGrade" class="custom-input" placeholder="Misal: Kelas 4B / Guru Olahraga"
+                required>
             </div>
           </div>
 
@@ -1022,7 +1188,8 @@
 
           <div class="form-group">
             <label>Catatan Tambahan:</label>
-            <input type="text" id="loanFormNotes" class="custom-input" placeholder="Catatan kondisi buku atau keperluan tugas">
+            <input type="text" id="loanFormNotes" class="custom-input"
+              placeholder="Catatan kondisi buku atau keperluan tugas">
           </div>
 
           <div class="modal-footer">
@@ -1050,7 +1217,8 @@
               <span id="detailBookType" class="badge-pill badge-digital">Digital</span>
             </div>
             <p><strong>Pengarang:</strong> <span id="detailBookAuthor">-</span></p>
-            <p><strong>Penerbit:</strong> <span id="detailBookPublisher">-</span> (<span id="detailBookYear">-</span>)</p>
+            <p><strong>Penerbit:</strong> <span id="detailBookPublisher">-</span> (<span id="detailBookYear">-</span>)
+            </p>
             <p><strong>ISBN:</strong> <span id="detailBookIsbn">-</span></p>
             <p><strong>Lokasi / Rak:</strong> <span id="detailBookLocation">-</span></p>
             <p><strong>Status Ketersediaan:</strong> <span id="detailBookStock">-</span></p>
@@ -1070,12 +1238,104 @@
     </div>
   </div>
 
+  <!-- MOBILE BOTTOM NAVIGATION (KHUSUS TAMPIL DI HANDPHONE) -->
+  <nav id="mobileBottomNav" class="mobile-bottom-nav">
+    <!-- Mode Publik (Siswa & Guru) -->
+    <div id="bottomNavPublic" class="bottom-nav-group">
+      <button class="bottom-nav-item active" id="bnavPubCatalog" onclick="handleMobileNavClick('catalog')">
+        <span class="bnav-icon">🏠</span>
+        <span class="bnav-label">Katalog</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavPubSearch" onclick="handleMobileNavClick('search')">
+        <span class="bnav-icon">🔍</span>
+        <span class="bnav-label">Cari</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavPubGuest" onclick="openGuestBookModal()">
+        <span class="bnav-icon">📝</span>
+        <span class="bnav-label">Buku Tamu</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavPubAuth" onclick="handleMobileNavClick('auth')">
+        <span class="bnav-icon">🔐</span>
+        <span class="bnav-label" id="bnavAuthLabel">Admin</span>
+      </button>
+    </div>
+
+    <!-- Mode Admin (Pengelola Perpustakaan) -->
+    <div id="bottomNavAdmin" class="bottom-nav-group" style="display:none;">
+      <button class="bottom-nav-item active" id="bnavAdmDashboard" onclick="switchAdminTab('tabDashboard')">
+        <span class="bnav-icon">📊</span>
+        <span class="bnav-label">Statistik</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavAdmBooks" onclick="switchAdminTab('tabBooks')">
+        <span class="bnav-icon">📚</span>
+        <span class="bnav-label">Buku</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavAdmLoans" onclick="switchAdminTab('tabLoans')">
+        <span class="bnav-icon">🔄</span>
+        <span class="bnav-label">Pinjam</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavAdmVisits" onclick="switchAdminTab('tabVisits')">
+        <span class="bnav-icon">📝</span>
+        <span class="bnav-label">Tamu</span>
+      </button>
+      <button class="bottom-nav-item" id="bnavAdmMore" onclick="openModal('modalMobileAdminMenu')">
+        <span class="bnav-icon">⚙️</span>
+        <span class="bnav-label">Menu</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MODAL DRAWER MENU ADMIN TAMBAHAN MOBILE -->
+  <div id="modalMobileAdminMenu" class="modal-backdrop">
+    <div class="modal-card modal-mobile-drawer">
+      <div class="modal-header">
+        <h3>⚙️ Menu Pengelola Digipus</h3>
+        <button class="modal-close" onclick="closeModal('modalMobileAdminMenu')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="mobile-menu-list">
+          <button class="mobile-menu-btn" onclick="closeModal('modalMobileAdminMenu'); switchAdminTab('tabReports')">
+            <span class="m-icon">📄</span>
+            <div class="m-text">
+              <strong>Laporan & Rekap Cetak PDF</strong>
+              <small>Rekap peminjaman, kunjungan & katalog A4</small>
+            </div>
+          </button>
+          <button class="mobile-menu-btn" onclick="closeModal('modalMobileAdminMenu'); switchAdminTab('tabSettings')">
+            <span class="m-icon">🏢</span>
+            <div class="m-text">
+              <strong>Biodata, Logo & Kop Sekolah</strong>
+              <small>Ubah identitas, upload logo & kop surat</small>
+            </div>
+          </button>
+          <button class="mobile-menu-btn" onclick="closeModal('modalMobileAdminMenu'); showPublicPortal()">
+            <span class="m-icon">👁️</span>
+            <div class="m-text">
+              <strong>Katalog Siswa (Tampilan Publik)</strong>
+              <small>Buka pratinjau halaman katalog publik</small>
+            </div>
+          </button>
+          <hr style="border:none; border-top:1px solid var(--border-color); margin:12px 0;">
+          <button class="mobile-menu-btn menu-btn-danger" onclick="closeModal('modalMobileAdminMenu'); logoutAdmin()">
+            <span class="m-icon">🚪</span>
+            <div class="m-text">
+              <strong>Keluar dari Dashboard Admin</strong>
+              <small>Akhiri sesi kerja administrator</small>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- SCRIPTS -->
+  <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/reports.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>

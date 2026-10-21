@@ -1,20 +1,4 @@
 {
   "version": 2,
-  "name": "digipus-sdn-cipinang-melayu-03",
-  "public": true,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Frame-Options", "value": "ALLOWALL" }
-      ]
-    }
-  ]
+  "cleanUrls": true
 }

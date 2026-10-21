@@ -5,7 +5,7 @@
  * =========================================================================
  */
 
-window.DEFAULT_LOGO_SVG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231e40af'/><circle cx='50' cy='50' r='38' fill='%23ffffff'/><path d='M25 65 L50 25 L75 65 Z' fill='%23f59e0b'/><path d='M35 65 L50 38 L65 65 Z' fill='%231e40af'/><circle cx='50' cy='56' r='6' fill='%23ffffff'/><text x='50' y='85' font-size='10' font-weight='bold' text-anchor='middle' fill='%231e40af'>SDN 03</text></svg>";
+window.DEFAULT_LOGO_SVG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><circle cx='200' cy='200' r='185' fill='%23e21b23'/><circle cx='200' cy='200' r='132' fill='%23ffffff'/><circle cx='200' cy='200' r='126' fill='none' stroke='%23e21b23' stroke-width='3.5'/><defs><path id='pathTop' d='M 42,200 A 158,158 0 0,1 358,200' fill='none'/><path id='pathBottom' d='M 358,200 A 158,158 0 0,1 42,200' fill='none'/></defs><polygon points='43,200 46,207 54,207 48,212 50,220 43,215 36,220 38,212 32,207 40,207' fill='%23ffffff' transform='rotate(-10 43 210)'/><polygon points='357,200 360,207 368,207 362,212 364,220 357,215 350,220 352,212 346,207 354,207' fill='%23ffffff' transform='rotate(10 357 210)'/><text fill='%23ffffff' font-family='Arial Black, Arial, sans-serif' font-weight='900' font-size='22' letter-spacing='2.5'><textPath href='%23pathTop' startOffset='50%' text-anchor='middle'>SEKOLAH DASAR NEGERI</textPath></text><text fill='%23ffffff' font-family='Arial Black, Arial, sans-serif' font-weight='900' font-size='20.5' letter-spacing='2'><textPath href='%23pathBottom' startOffset='50%' text-anchor='middle'>CIPINANG MELAYU 03 PAGI</textPath></text><polygon points='200,122 204,134 216,134 207,142 210,154 200,147 190,154 193,142 184,134 196,134' fill='%23f4b400'/><polygon points='175,138 178,145 186,145 180,150 182,158 175,153 168,158 170,150 164,145 172,145' fill='%23f4b400' transform='rotate(-15 175 148)'/><polygon points='225,138 228,145 236,145 230,150 232,158 225,153 218,158 220,150 214,145 222,145' fill='%23f4b400' transform='rotate(15 225 148)'/><path d='M 200,172 C 182,156 150,155 125,178 C 145,174 175,172 200,183 C 225,172 255,174 275,178 C 250,155 218,156 200,172 Z' fill='%2300853f'/><circle cx='154' cy='208' r='18' fill='%231b65b6'/><path d='M 154,226 C 142,226 130,230 120,227 C 117,226 122,233 128,239 C 138,248 144,242 144,258 L 138,278 C 137,282 144,282 146,278 L 153,260 L 160,278 C 162,282 169,282 168,278 L 162,258 C 162,244 170,238 188,214 C 189,212 184,213 178,218 C 168,226 160,226 154,226 Z' fill='%231b65b6'/><circle cx='242' cy='210' r='17' fill='%231b65b6'/><path d='M 230,206 C 218,202 210,210 214,217 C 218,222 225,214 229,212 Z' fill='%231b65b6'/><path d='M 254,206 C 266,202 274,210 270,217 C 266,222 259,214 255,212 Z' fill='%231b65b6'/><path d='M 242,226 C 236,226 230,228 220,221 C 214,217 212,219 216,224 C 224,233 232,238 232,246 L 225,264 C 224,266 226,267 229,267 L 257,267 C 260,267 262,266 261,264 L 254,246 C 254,238 262,233 274,225 C 278,222 276,219 270,222 C 260,228 248,226 242,226 Z' fill='%231b65b6'/><path d='M 235,267 L 233,280 C 232,283 238,283 239,280 L 241,267 Z M 249,267 L 251,280 C 252,283 258,283 257,280 L 255,267 Z' fill='%231b65b6'/></svg>";
 
 let categoryChartInstance = null;
 let topBooksChartInstance = null;
@@ -19,6 +19,30 @@ let uploadedEbookName = null;
 let currentLogoDataUrl = null;
 let currentKopDataUrl = null;
 let currentKopMode = "text";
+let currentBookCoverDataUrl = "";
+
+/**
+ * Page Loader Helpers (Efek transisi loading saat refresh / buka sistem)
+ */
+function showPageLoader(text = "Memuat data perpustakaan...") {
+  const loader = document.getElementById("pageLoader");
+  const txt = document.getElementById("loaderStatusText");
+  if (txt) txt.innerText = text;
+  if (loader) {
+    loader.classList.remove("fade-out");
+    loader.style.display = "flex";
+  }
+}
+
+function hidePageLoader() {
+  const loader = document.getElementById("pageLoader");
+  if (loader) {
+    loader.classList.add("fade-out");
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 450);
+  }
+}
 
 /**
  * Kompresi dan penyesuaian ukuran gambar di browser menggunakan Canvas
@@ -54,24 +78,41 @@ function compressAndResizeImage(file, maxWidth, maxHeight, quality = 0.85) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1. Tampilkan status koneksi
-  updateConnectionStatusUI();
+  // 1. Tampilkan animasi loading pembuka
+  showPageLoader("Menghubungkan ke sistem perpustakaan...");
 
-  // 2. Muat pengaturan & identitas sekolah
-  await loadSchoolSettings();
+  try {
+    // 2. Tampilkan status koneksi
+    updateConnectionStatusUI();
 
-  // 3. Render katalog buku publik
-  await renderPublicCatalog();
+    // 3. Muat pengaturan & identitas sekolah (Logo, Kop, Biodata)
+    await loadSchoolSettings();
 
-  // 4. Periksa apakah admin sudah login
-  if (window.DigipusAPI.isLoggedIn()) {
-    updateAuthButtonUI(true);
-  } else {
-    updateAuthButtonUI(false);
+    // 4. Periksa apakah admin sudah login
+    const isLoggedIn = window.DigipusAPI.isLoggedIn();
+    updateAuthButtonUI(isLoggedIn);
+
+    // 5. Muat katalog publik
+    await renderPublicCatalog();
+
+    // 6. Pertahankan halaman & tab yang sedang dibuka saat di-refresh!
+    const savedView = localStorage.getItem("digipus_active_view") || "public";
+    const savedTab = localStorage.getItem("digipus_active_tab") || "tabDashboard";
+
+    if (isLoggedIn && savedView === "admin") {
+      showAdminDashboard(savedTab, false);
+    } else {
+      showPublicPortal(false);
+    }
+
+    // 7. Inisialisasi default date input
+    initDefaultDateInputs();
+  } catch(err) {
+    console.error("Kesalahan inisialisasi:", err);
+  } finally {
+    // Hilangkan loader dengan transisi halus
+    setTimeout(hidePageLoader, 400);
   }
-
-  // 5. Inisialisasi default date input
-  initDefaultDateInputs();
 });
 
 function initDefaultDateInputs() {
@@ -89,8 +130,19 @@ function initDefaultDateInputs() {
 }
 
 // =========================================================================
-// UI HELPERS & TOAST NOTIFICATION
+// UI HELPERS, TOAST NOTIFICATION & TOGGLE
 // =========================================================================
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    if (btn) btn.innerHTML = "🙈 Sembunyikan";
+  } else {
+    input.type = "password";
+    if (btn) btn.innerHTML = "👁️ Tampilkan";
+  }
+}
 function showToast(message, type = "success") {
   const container = document.getElementById("toastContainer");
   const toast = document.createElement("div");
@@ -139,12 +191,61 @@ function updateConnectionStatusUI() {
     badge.className = "status-pill status-demo";
     text.innerText = "Mode Demo (Lokal)";
   }
+
+  updateMultiDeviceShareUI();
+}
+
+function updateMultiDeviceShareUI() {
+  const shareBox = document.getElementById("multiDeviceShareBox");
+  const shareInput = document.getElementById("multiDeviceShareUrl");
+  if (!shareBox || !shareInput) return;
+
+  const url = window.DigipusAPI.getAppScriptUrl();
+  if (url && url.startsWith("https://script.google.com/macros/s/")) {
+    const currentLoc = window.location.href.split("?")[0].split("#")[0];
+    const fullShareUrl = currentLoc + "?gas=" + encodeURIComponent(url.trim());
+    shareInput.value = fullShareUrl;
+    shareBox.style.display = "block";
+  } else {
+    shareBox.style.display = "none";
+  }
+}
+
+function copyMultiDeviceShareUrl() {
+  const shareInput = document.getElementById("multiDeviceShareUrl");
+  if (!shareInput || !shareInput.value) {
+    showToast("Belum ada koneksi Google Apps Script yang aktif.", "error");
+    return;
+  }
+
+  const textToCopy = shareInput.value;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      showToast("Tautan auto-connect disalin! Buka link ini di HP agar langsung terhubung.", "success");
+    }).catch(() => {
+      shareInput.select();
+      document.execCommand("copy");
+      showToast("Tautan auto-connect disalin!", "success");
+    });
+  } else {
+    shareInput.select();
+    document.execCommand("copy");
+    showToast("Tautan auto-connect disalin!", "success");
+  }
 }
 
 async function loadSchoolSettings() {
   const s = await window.DigipusAPI.getSettings();
 
-  currentLogoDataUrl = s.school_logo_url || window.DEFAULT_LOGO_SVG;
+  // Bersihkan logo lama jika masih SVG segitiga / lama
+  if (!s.school_logo_url || (s.school_logo_url.startsWith("data:image/svg+xml") && !s.school_logo_url.includes("SEKOLAH DASAR NEGERI"))) {
+    currentLogoDataUrl = window.DEFAULT_LOGO_SVG;
+    s.school_logo_url = window.DEFAULT_LOGO_SVG;
+    localStorage.setItem("digipus_settings", JSON.stringify(s));
+  } else {
+    currentLogoDataUrl = s.school_logo_url;
+  }
+
   currentKopDataUrl = s.kop_image_url || "";
   currentKopMode = s.kop_mode || "text";
 
@@ -157,6 +258,12 @@ async function loadSchoolSettings() {
 
   const previewLogo = document.getElementById("settingLogoPreview");
   if (previewLogo) previewLogo.src = currentLogoDataUrl;
+
+  const loginLogo = document.getElementById("loginModalLogo");
+  if (loginLogo) loginLogo.src = currentLogoDataUrl;
+
+  const loaderLogo = document.getElementById("loaderSchoolLogo");
+  if (loaderLogo) loaderLogo.src = currentLogoDataUrl;
 
   // Update Mode Kop Surat
   const radioText = document.getElementById("radioKopText");
@@ -217,16 +324,28 @@ async function handleKopImageUpload(e) {
     const compressed = await compressAndResizeImage(file, 1200, 300, 0.9);
     currentKopDataUrl = compressed;
     currentKopMode = "image";
+    
     const radioImg = document.getElementById("radioKopImage");
     if (radioImg) radioImg.checked = true;
     updateKopPreviewUI();
-    showToast("Gambar kop surat siap disimpan! Klik 'Simpan Biodata & Pengaturan'.", "success");
+
+    // LANGSUNG SIMPAN OTOMATIS: Bertahan saat refresh & seketika tersimpan permanen!
+    await window.DigipusAPI.saveSettings({
+      kop_image_url: compressed,
+      kop_mode: "image"
+    });
+
+    if (typeof generateReportPreview === "function") {
+      generateReportPreview();
+    }
+
+    showToast("✅ Gambar Kop Surat berhasil diunggah & langsung tersimpan!", "success");
   } catch(err) {
-    showToast("Gagal memproses gambar: " + err.message, "error");
+    showToast("Gagal memproses gambar kop: " + err.message, "error");
   }
 }
 
-function removeKopImage() {
+async function removeKopImage() {
   if (confirm("Hapus gambar kop surat dan gunakan Format Teks Kedinasan Otomatis?")) {
     currentKopDataUrl = "";
     currentKopMode = "text";
@@ -235,7 +354,18 @@ function removeKopImage() {
     const section = document.getElementById("sectionUploadKopImage");
     if (section) section.style.display = "none";
     updateKopPreviewUI();
-    showToast("Gambar kop surat dihapus.", "info");
+
+    // Auto-save perubahan hapus kop surat
+    await window.DigipusAPI.saveSettings({
+      kop_image_url: "",
+      kop_mode: "text"
+    });
+
+    if (typeof generateReportPreview === "function") {
+      generateReportPreview();
+    }
+
+    showToast("Gambar kop surat dihapus & tersimpan.", "info");
   }
 }
 
@@ -245,21 +375,58 @@ async function handleLogoUpload(e) {
 
   try {
     showToast("Mengompres & memproses logo...", "info");
-    const compressed = await compressAndResizeImage(file, 250, 250, 0.95);
+    const compressed = await compressAndResizeImage(file, 260, 260, 0.95);
     currentLogoDataUrl = compressed;
-    document.getElementById("settingLogoPreview").src = compressed;
-    document.getElementById("navSchoolLogo").src = compressed;
-    showToast("Logo berhasil dimuat! Klik 'Simpan Biodata & Pengaturan'.", "success");
+
+    // Update elemen gambar logo seketika
+    const previewEl = document.getElementById("settingLogoPreview");
+    if (previewEl) previewEl.src = compressed;
+
+    const navLogoEl = document.getElementById("navSchoolLogo");
+    if (navLogoEl) navLogoEl.src = compressed;
+
+    const modalLogoEl = document.getElementById("loginModalLogo");
+    if (modalLogoEl) modalLogoEl.src = compressed;
+
+    const loaderLogoEl = document.getElementById("loaderSchoolLogo");
+    if (loaderLogoEl) loaderLogoEl.src = compressed;
+
+    // LANGSUNG SIMPAN OTOMATIS: Bertahan saat refresh & tersimpan permanen!
+    await window.DigipusAPI.saveSettings({
+      school_logo_url: compressed
+    });
+
+    if (typeof generateReportPreview === "function") {
+      generateReportPreview();
+    }
+
+    showToast("✅ Logo sekolah berhasil diunggah & langsung tersimpan!", "success");
   } catch(err) {
     showToast("Gagal memproses logo: " + err.message, "error");
   }
 }
 
-function resetDefaultLogo() {
+async function resetDefaultLogo() {
   currentLogoDataUrl = window.DEFAULT_LOGO_SVG;
-  document.getElementById("settingLogoPreview").src = window.DEFAULT_LOGO_SVG;
-  document.getElementById("navSchoolLogo").src = window.DEFAULT_LOGO_SVG;
-  showToast("Logo dikembalikan ke standar SDN 03. Klik Simpan untuk menerapkan.", "info");
+  const previewEl = document.getElementById("settingLogoPreview");
+  if (previewEl) previewEl.src = window.DEFAULT_LOGO_SVG;
+
+  const navLogoEl = document.getElementById("navSchoolLogo");
+  if (navLogoEl) navLogoEl.src = window.DEFAULT_LOGO_SVG;
+
+  const modalLogoEl = document.getElementById("loginModalLogo");
+  if (modalLogoEl) modalLogoEl.src = window.DEFAULT_LOGO_SVG;
+
+  // Auto-save reset logo
+  await window.DigipusAPI.saveSettings({
+    school_logo_url: window.DEFAULT_LOGO_SVG
+  });
+
+  if (typeof generateReportPreview === "function") {
+    generateReportPreview();
+  }
+
+  showToast("Logo dikembalikan ke standar SDN 03 & tersimpan.", "info");
 }
 
 async function testBackendConnection() {
@@ -367,16 +534,27 @@ function logoutAdmin() {
   }
 }
 
-function showAdminDashboard() {
+function showAdminDashboard(initialTab = "tabDashboard", updateStorage = true) {
   document.getElementById("viewPublic").classList.remove("active");
   document.getElementById("viewAdmin").classList.add("active");
-  switchAdminTab("tabDashboard");
-  refreshAdminDashboard();
+  
+  if (updateStorage) {
+    localStorage.setItem("digipus_active_view", "admin");
+  }
+
+  updateMobileNavUI("admin", initialTab);
+  switchAdminTab(initialTab);
 }
 
-function showPublicPortal() {
+function showPublicPortal(updateStorage = true) {
   document.getElementById("viewAdmin").classList.remove("active");
   document.getElementById("viewPublic").classList.add("active");
+
+  if (updateStorage) {
+    localStorage.setItem("digipus_active_view", "public");
+  }
+
+  updateMobileNavUI("public", "catalog");
   renderPublicCatalog();
 }
 
@@ -390,8 +568,13 @@ function switchAdminTab(tabId) {
   const targetTab = document.getElementById(tabId);
   if (targetTab) targetTab.classList.add("active");
 
+  // Simpan tab aktif agar saat F5/refresh tetap berada di tab ini!
+  localStorage.setItem("digipus_active_tab", tabId);
+
   const activeBtn = Array.from(navBtns).find(b => b.getAttribute("onclick")?.includes(tabId));
   if (activeBtn) activeBtn.classList.add("active");
+
+  updateMobileNavUI("admin", tabId);
 
   if (tabId === "tabDashboard") {
     refreshAdminDashboard();
@@ -403,6 +586,58 @@ function switchAdminTab(tabId) {
     renderAdminVisitsTable();
   } else if (tabId === "tabReports") {
     generateReportPreview();
+  }
+}
+
+/**
+ * Controller Mobile Bottom Navigation Bar (Handphone)
+ */
+function updateMobileNavUI(activeView, activeTab) {
+  const bnavPub = document.getElementById("bottomNavPublic");
+  const bnavAdm = document.getElementById("bottomNavAdmin");
+
+  if (activeView === "admin") {
+    if (bnavPub) bnavPub.style.display = "none";
+    if (bnavAdm) bnavAdm.style.display = "flex";
+
+    // Update active highlight di bottom nav admin
+    const bItems = document.querySelectorAll("#bottomNavAdmin .bottom-nav-item");
+    bItems.forEach(b => b.classList.remove("active"));
+
+    if (activeTab === "tabDashboard") document.getElementById("bnavAdmDashboard")?.classList.add("active");
+    else if (activeTab === "tabBooks") document.getElementById("bnavAdmBooks")?.classList.add("active");
+    else if (activeTab === "tabLoans") document.getElementById("bnavAdmLoans")?.classList.add("active");
+    else if (activeTab === "tabVisits") document.getElementById("bnavAdmVisits")?.classList.add("active");
+  } else {
+    if (bnavAdm) bnavAdm.style.display = "none";
+    if (bnavPub) bnavPub.style.display = "flex";
+
+    const bItems = document.querySelectorAll("#bottomNavPublic .bottom-nav-item");
+    bItems.forEach(b => b.classList.remove("active"));
+
+    if (activeTab === "catalog") document.getElementById("bnavPubCatalog")?.classList.add("active");
+    else if (activeTab === "search") document.getElementById("bnavPubSearch")?.classList.add("active");
+
+    const authLabel = document.getElementById("bnavAuthLabel");
+    if (authLabel) {
+      authLabel.innerText = window.DigipusAPI.isLoggedIn() ? "Dashboard" : "Admin";
+    }
+  }
+}
+
+function handleMobileNavClick(action) {
+  if (action === "catalog") {
+    showPublicPortal();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else if (action === "search") {
+    showPublicPortal();
+    const searchInput = document.getElementById("publicSearchInput");
+    if (searchInput) {
+      searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => searchInput.focus(), 300);
+    }
+  } else if (action === "auth") {
+    toggleAuthAction();
   }
 }
 
@@ -838,14 +1073,54 @@ function handleAdminBookFilter() {
   renderAdminBooksTable();
 }
 
+function updateBookFormCoverPreview(url) {
+  const previewImg = document.getElementById("bookFormCoverPreviewImg");
+  const placeholder = document.getElementById("bookCoverPlaceholder");
+  const removeBtn = document.getElementById("btnRemoveBookCover");
+  const hiddenInput = document.getElementById("bookFormCoverUrl");
+
+  if (url) {
+    if (previewImg) {
+      previewImg.src = url;
+      previewImg.style.display = "block";
+    }
+    if (placeholder) placeholder.style.display = "none";
+    if (removeBtn) removeBtn.style.display = "inline-block";
+    if (hiddenInput) hiddenInput.value = url;
+  } else {
+    if (previewImg) {
+      previewImg.src = "";
+      previewImg.style.display = "none";
+    }
+    if (placeholder) placeholder.style.display = "flex";
+    if (removeBtn) removeBtn.style.display = "none";
+    if (hiddenInput) hiddenInput.value = "";
+  }
+}
+
+function removeBookCover() {
+  currentBookCoverDataUrl = "";
+  uploadedCoverBase64 = null;
+  uploadedCoverName = null;
+  const fileInput = document.getElementById("bookFormCoverFile");
+  if (fileInput) fileInput.value = "";
+  updateBookFormCoverPreview("");
+  showToast("Sampul buku telah dihapus.", "info");
+}
+
 function openAddBookModal() {
   document.getElementById("bookForm").reset();
   document.getElementById("bookFormId").value = "";
   document.getElementById("modalBookFormTitle").innerText = "📚 Tambah Buku Baru";
   document.getElementById("sectionDigitalFile").style.display = "none";
   document.getElementById("colBookStock").style.display = "block";
+  
   uploadedCoverBase64 = null;
+  uploadedCoverName = null;
   uploadedEbookBase64 = null;
+  currentBookCoverDataUrl = "";
+  updateBookFormCoverPreview("");
+
   openModal("modalBookForm");
 }
 
@@ -865,9 +1140,13 @@ async function openEditBookModal(id) {
   document.getElementById("bookFormPublisher").value = b.publisher || "";
   document.getElementById("bookFormYear").value = b.year || "2024";
   document.getElementById("bookFormIsbn").value = b.isbn || "";
-  document.getElementById("bookFormCoverUrl").value = b.coverUrl || "";
   document.getElementById("bookFormFileUrl").value = b.fileUrl || "";
   document.getElementById("bookFormSynopsis").value = b.synopsis || "";
+
+  // Tampilkan cover buku yang tersimpan
+  currentBookCoverDataUrl = b.coverUrl || "";
+  uploadedCoverBase64 = null;
+  updateBookFormCoverPreview(currentBookCoverDataUrl);
 
   handleBookTypeChange();
   openModal("modalBookForm");
@@ -880,16 +1159,24 @@ function handleBookTypeChange() {
   document.getElementById("colBookStock").style.display = isDigital ? "none" : "block";
 }
 
-function handleCoverFileSelected(e) {
+async function handleCoverFileSelected(e) {
   const file = e.target.files[0];
   if (!file) return;
-  uploadedCoverName = file.name;
-  uploadedCoverMime = file.type;
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    uploadedCoverBase64 = evt.target.result.split(",")[1];
-  };
-  reader.readAsDataURL(file);
+
+  try {
+    showToast("Mengompres & memproses cover buku...", "info");
+    const compressed = await compressAndResizeImage(file, 450, 600, 0.88);
+    currentBookCoverDataUrl = compressed;
+    uploadedCoverName = file.name;
+    uploadedCoverMime = "image/png";
+    uploadedCoverBase64 = compressed.split(",")[1];
+    
+    // Tampilkan pratinjau seketika
+    updateBookFormCoverPreview(compressed);
+    showToast("✅ Cover buku berhasil dimuat! Siap disimpan.", "success");
+  } catch(err) {
+    showToast("Gagal memproses gambar cover: " + err.message, "error");
+  }
 }
 
 function handleEbookFileSelected(e) {
@@ -911,24 +1198,17 @@ async function handleBookFormSubmit(e) {
   btn.innerText = "Menyimpan ke Database...";
 
   try {
-    let coverUrl = document.getElementById("bookFormCoverUrl").value;
+    let coverUrl = currentBookCoverDataUrl || document.getElementById("bookFormCoverUrl")?.value || "";
     let fileUrl = document.getElementById("bookFormFileUrl").value;
 
-    // Jika upload cover baru ke Drive
-    if (uploadedCoverBase64) {
-      showToast("Mengunggah cover buku ke Google Drive...", "info");
-      const up = await window.DigipusAPI.uploadFileToDrive(
-        uploadedCoverName || "cover.png",
-        uploadedCoverMime || "image/png",
-        uploadedCoverBase64,
-        "ebook"
-      );
-      if (up && up.fileUrl) coverUrl = up.fileUrl;
+    // Jika belum ada cover, sediakan cover ilustrasi default ramah anak
+    if (!coverUrl) {
+      coverUrl = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400";
     }
 
-    // Jika upload file PDF ke Drive subfolder Ebook_Files
-    if (uploadedEbookBase64) {
-      showToast("Mengunggah file PDF E-Book ke subfolder Ebook_Files...", "info");
+    // Jika online dan upload file PDF ke Drive subfolder Ebook_Files
+    if (uploadedEbookBase64 && window.DigipusAPI.isCloudConnected()) {
+      showToast("Mengunggah file PDF E-Book ke Google Drive...", "info");
       const upPdf = await window.DigipusAPI.uploadFileToDrive(
         uploadedEbookName || "ebook.pdf",
         uploadedEbookMime || "application/pdf",
